@@ -35,7 +35,7 @@ const QString STATUS_FAILED = "-4";
  */
 typedef QVector<int> MyArray;
 
-BatchWindow::BatchWindow(QWidget* parent, MainMenuHandler* handler) : QMainWindow(parent), readLibraryWatcher(NULL), loadPlaylistWatcher(NULL), addFilesWatcher(NULL), metadataReadWatcher(NULL), analysisWatcher(NULL), ui(new Ui::BatchWindow), metadataColumnMapping(METADATA_TAG_T_COUNT) {
+BatchWindow::BatchWindow(QWidget* parent, MainMenuHandler* handler) : QMainWindow(parent), readLibraryWatcher(nullptr), loadPlaylistWatcher(nullptr), addFilesWatcher(nullptr), metadataReadWatcher(nullptr), analysisWatcher(nullptr), ui(new Ui::BatchWindow), metadataColumnMapping(METADATA_TAG_T_COUNT) {
   // ASYNC
   qRegisterMetaType<MyArray>("MyArray");
 
@@ -50,12 +50,21 @@ BatchWindow::BatchWindow(QWidget* parent, MainMenuHandler* handler) : QMainWindo
   ui->splitter->setStretchFactor(1, 3);
   ui->splitter->setCollapsible(0, true);
   ui->splitter->setCollapsible(1, false);
-  if (prefs.getBatchWindowState() != QByteArray())
+  if (prefs.getBatchWindowState() != QByteArray()) { { {
     this->restoreState(prefs.getBatchWindowState());
-  if (prefs.getBatchWindowGeometry() != QByteArray())
+}
+}
+}
+  if (prefs.getBatchWindowGeometry() != QByteArray()) { { {
     this->restoreGeometry(prefs.getBatchWindowGeometry());
-  if (prefs.getBatchWindowSplitterState() != QByteArray())
+}
+}
+}
+  if (prefs.getBatchWindowSplitterState() != QByteArray()) { { {
     ui->splitter->restoreState(prefs.getBatchWindowSplitterState());
+}
+}
+}
   keyFinderRow    = QBrush(QColor(191, 255, 191));
   keyFinderAltRow = QBrush(QColor(127, 223, 127));
   textDefault     = QBrush(QColor(  0,   0,   0));
@@ -139,23 +148,23 @@ BatchWindow::BatchWindow(QWidget* parent, MainMenuHandler* handler) : QMainWindo
 }
 
 BatchWindow::~BatchWindow() {
-  if (readLibraryWatcher != NULL) {
+  if (readLibraryWatcher != nullptr) {
     readLibraryWatcher->cancel();
     readLibraryWatcher->waitForFinished();
   }
-  if (loadPlaylistWatcher != NULL) {
+  if (loadPlaylistWatcher != nullptr) {
     loadPlaylistWatcher->cancel();
     loadPlaylistWatcher->waitForFinished();
   }
-  if (addFilesWatcher != NULL) {
+  if (addFilesWatcher != nullptr) {
     addFilesWatcher->cancel();
     addFilesWatcher->waitForFinished();
   }
-  if (metadataReadWatcher != NULL) {
+  if (metadataReadWatcher != nullptr) {
     metadataReadWatcher->cancel();
     metadataReadWatcher->waitForFinished();
   }
-  if (analysisWatcher != NULL) {
+  if (analysisWatcher != nullptr) {
     analysisWatcher->cancel();
     analysisWatcher->waitForFinished();
   }
@@ -208,17 +217,17 @@ void BatchWindow::readLibraryFinished() {
   libraryPlaylists = readLibraryWatcher->result();
 
   delete readLibraryWatcher;
-  readLibraryWatcher = NULL;
+  readLibraryWatcher = nullptr;
 
-  for (int i=0; i<(signed)libraryPlaylists.size(); i++) {
+  for (auto & libraryPlaylist : libraryPlaylists) {
 
     int newRow = ui->libraryWidget->rowCount();
     ui->libraryWidget->insertRow(newRow);
     ui->libraryWidget->setItem(newRow, COL_PLAYLIST_NAME, new QTableWidgetItem());
-    ui->libraryWidget->item(newRow, COL_PLAYLIST_NAME)->setText(libraryPlaylists[i].name);
+    ui->libraryWidget->item(newRow, COL_PLAYLIST_NAME)->setText(libraryPlaylist.name);
     QString iconPath = ":/KeyFinder/images/";
 
-    switch (libraryPlaylists[i].source) {
+    switch (libraryPlaylist.source) {
       case EXTERNAL_PLAYLIST_SOURCE_ITUNES:
         iconPath += "iTunes";
         break;
@@ -256,7 +265,7 @@ void BatchWindow::on_libraryWidget_cellClicked(int row, int /*col*/) {
     }
   }
 
-  if (initialHelpLabel) {
+  if (initialHelpLabel != nullptr) {
     initialHelpLabel->deleteLater();
   }
   ui->tableWidget->setRowCount(0);
@@ -272,7 +281,7 @@ void BatchWindow::on_libraryWidget_cellClicked(int row, int /*col*/) {
 
   int playlist = row - 1;
 
-  if (libraryPlaylists[playlist].tracks.size() == 0) {
+  if (libraryPlaylists[playlist].tracks.empty()) {
     setGuiDefaults();
   } else {
     receiveUrls(libraryPlaylists[playlist].tracks);
@@ -296,12 +305,12 @@ void BatchWindow::dropEvent(QDropEvent *e) {
   receiveUrls(e->mimeData()->urls());
 }
 
-bool BatchWindow::receiveUrls(const QList<QUrl>& urls) {
-  if ((metadataReadWatcher != NULL && metadataReadWatcher->isRunning()) || (analysisWatcher != NULL && analysisWatcher->isRunning())) {
+auto BatchWindow::receiveUrls(const QList<QUrl>& urls) -> bool {
+  if ((metadataReadWatcher != nullptr && metadataReadWatcher->isRunning()) || (analysisWatcher != nullptr && analysisWatcher->isRunning())) {
     return false;
   }
   droppedFiles << urls;
-  if (addFilesWatcher == NULL) {
+  if (addFilesWatcher == nullptr) {
     //: Text in the Batch window status bar
     setGuiRunning(tr("Loading files..."), false);
     QFuture<void> addFileFuture = QtConcurrent::run(this, &BatchWindow::addDroppedFiles);
@@ -340,8 +349,8 @@ void BatchWindow::addDroppedFiles() {
     // check if it's a symlink (.isSymLink doesn't seem to work on Lion)
     if (fileInfo.isSymLink() || fileInfo.symLinkTarget() != "") {
       bool isNewSymLink = true;
-      for (int j = 0; j < symLinks.size(); j++) {
-        if (symLinks[j] == fileInfo) {
+      for (auto & symLink : symLinks) {
+        if (symLink == fileInfo) {
           isNewSymLink = false;
           break;
         }
@@ -358,7 +367,7 @@ void BatchWindow::addDroppedFiles() {
     if (fileExt == "m3u") {
       droppedFiles << ExternalPlaylistProvider::readM3uStandalonePlaylist(filePath);
       continue;
-    } else if (fileExt == "xml") {
+    } if (fileExt == "xml") {
       droppedFiles << ExternalPlaylistProvider::readITunesStandalonePlaylist(filePath);
       continue;
     }
@@ -401,21 +410,21 @@ void BatchWindow::addDroppedFiles() {
         );
 }
 
-QList<QUrl> BatchWindow::getDirectoryContents(QDir dir) const {
+auto BatchWindow::getDirectoryContents(const QDir& dir) const -> QList<QUrl> {
   QFileInfoList contents = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot, QDir::DirsFirst);
   QList<QUrl> results;
-  for (int i = 0; i<(signed)contents.size(); i++) {
-    if (QFileInfo(contents[i].filePath()).isDir()) {
-      results << getDirectoryContents(QDir(contents[i].filePath()));
+  for (auto & content : contents) {
+    if (QFileInfo(content.filePath()).isDir()) {
+      results << getDirectoryContents(QDir(content.filePath()));
     } else {
-      results.push_back(QUrl::fromLocalFile(contents[i].filePath()));
+      results.push_back(QUrl::fromLocalFile(content.filePath()));
     }
   }
   return results;
 }
 
-void BatchWindow::addNewRow(QString fileUrl) {
-  if (initialHelpLabel) {
+void BatchWindow::addNewRow(const QString& fileUrl) {
+  if (initialHelpLabel != nullptr) {
     initialHelpLabel->deleteLater();
   }
   int newRow = ui->tableWidget->rowCount();
@@ -436,7 +445,7 @@ void BatchWindow::addNewRow(QString fileUrl) {
 
 void BatchWindow::addFilesFinished() {
   delete addFilesWatcher;
-  addFilesWatcher = NULL;
+  addFilesWatcher = nullptr;
   readMetadata();
 }
 
@@ -445,9 +454,12 @@ void BatchWindow::readMetadata() {
   //: Text in the Batch window status bar
   setGuiRunning(tr("Reading tags..."), true);
   QList<AsyncFileObject> objects;
-  for (int row = 0; row < (signed)ui->tableWidget->rowCount(); row++) {
-    if (ui->tableWidget->item(row, COL_STATUS)->text() == STATUS_NEW)
+  for (int row = 0; row < ui->tableWidget->rowCount(); row++) {
+    if (ui->tableWidget->item(row, COL_STATUS)->text() == STATUS_NEW) { { {
       objects.push_back(AsyncFileObject(ui->tableWidget->item(row, COL_FILEPATH)->text(), prefs, row));
+}
+}
+}
   }
   QFuture<MetadataReadResult> metadataReadFuture = QtConcurrent::mapped(objects, metadataReadProcess);
   metadataReadWatcher = new QFutureWatcher<MetadataReadResult>();
@@ -471,7 +483,7 @@ void BatchWindow::metadataReadResultReadyAt(int index) {
 
 void BatchWindow::metadataReadFinished() {
   delete metadataReadWatcher;
-  metadataReadWatcher = NULL;
+  metadataReadWatcher = nullptr;
   setGuiDefaults();
 }
 
@@ -489,8 +501,11 @@ void BatchWindow::checkRowsForSkipping() {
   for (int row = 0; row < ui->tableWidget->rowCount(); row++) {
     // ignore files that are complete or failed
     QString status = ui->tableWidget->item(row, COL_STATUS)->text();
-    if (status != STATUS_NEW && status != STATUS_TAGSREAD && status != STATUS_SKIPPED )
+    if (status != STATUS_NEW && status != STATUS_TAGSREAD && status != STATUS_SKIPPED ) { { {
       continue;
+}
+}
+}
     // if we're not skipping, don't skip
     if (!skippingFiles) {
       markRowSkipped(row, false);
@@ -500,8 +515,11 @@ void BatchWindow::checkRowsForSkipping() {
     // otherwise, skip this file if the relevant tags already contain tag metadata
     bool skip = true;
     std::vector<metadata_write_t> writePrefs(METADATA_TAG_T_COUNT + 1);
-    for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++)
-      writePrefs[i] = prefs.getMetadataWriteByTagEnum((metadata_tag_t) i);
+    for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) { { {
+      writePrefs[i] = prefs.getMetadataWriteByTagEnum(static_cast<metadata_tag_t>(i));
+}
+}
+}
     writePrefs[METADATA_TAG_T_COUNT] = prefs.getMetadataWriteFilename();
 
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
@@ -516,8 +534,8 @@ void BatchWindow::checkRowsForSkipping() {
 
     // special case; don't skip if all metadata write prefs are off
     bool specialCase = true;
-    for (unsigned int i = 0; i < writePrefs.size(); i++) {
-      if (writePrefs[i] != METADATA_WRITE_NONE) {
+    for (auto & writePref : writePrefs) {
+      if (writePref != METADATA_WRITE_NONE) {
         specialCase = false;
       }
     }
@@ -529,7 +547,7 @@ void BatchWindow::checkRowsForSkipping() {
   }
 }
 
-bool BatchWindow::fieldAlreadyHasKeyData(int row, int col, metadata_write_t write) {
+auto BatchWindow::fieldAlreadyHasKeyData(int row, int col, metadata_write_t write) -> bool {
   if (ui->tableWidget->item(row, col) == 0) {
     return false;
   }
@@ -538,10 +556,7 @@ bool BatchWindow::fieldAlreadyHasKeyData(int row, int col, metadata_write_t writ
     str = str.mid(0,str.lastIndexOf("."));
   }
   unsigned int charLimit = (col == COL_TAG_KEY ? METADATA_CHARLIMIT_KEY : METADATA_CHARLIMIT_OTHERS);
-  if (prefs.newString("", str, charLimit, write).isEmpty()) {
-    return true;
-  }
-  return false;
+  return prefs.newString("", str, charLimit, write).isEmpty();
 }
 
 void BatchWindow::markRowSkipped(int row, bool skip) {
@@ -580,10 +595,10 @@ void BatchWindow::runAnalysis() {
 void BatchWindow::on_cancelBatchButton_clicked() {
   //: Text in the Batch window status bar
   setGuiRunning(tr("Cancelling..."), false);
-  if (metadataReadWatcher != NULL) {
+  if (metadataReadWatcher != nullptr) {
     metadataReadWatcher->cancel();
   }
-  if (analysisWatcher != NULL) {
+  if (analysisWatcher != nullptr) {
     analysisWatcher->cancel();
   }
 }
@@ -610,13 +625,13 @@ void BatchWindow::analysisResultReadyAt(int index) {
 
 void BatchWindow::analysisFinished() {
   delete analysisWatcher;
-  analysisWatcher = NULL;
+  analysisWatcher = nullptr;
   setGuiDefaults();
   QApplication::beep();
 }
 
 void BatchWindow::writeDetectedToFiles() {
-  if ((addFilesWatcher != NULL && addFilesWatcher->isRunning()) || (metadataReadWatcher != NULL && metadataReadWatcher->isRunning()) || (analysisWatcher != NULL && analysisWatcher->isRunning())) {
+  if ((addFilesWatcher != nullptr && addFilesWatcher->isRunning()) || (metadataReadWatcher != nullptr && metadataReadWatcher->isRunning()) || (analysisWatcher != nullptr && analysisWatcher->isRunning())) {
     QApplication::beep();
     return;
   }
@@ -632,7 +647,7 @@ void BatchWindow::writeDetectedToFiles() {
     if (std::find(rowsTried.begin(), rowsTried.end(), row) == rowsTried.end()) {
       // only write if there's a detected key
       bool toIntOk = false;
-      KeyFinder::key_t key = (KeyFinder::key_t) ui->tableWidget->item(row, COL_STATUS)->text().toInt(&toIntOk);
+      KeyFinder::key_t key = static_cast<KeyFinder::key_t>(ui->tableWidget->item(row, COL_STATUS)->text().toInt(&toIntOk));
       if (toIntOk && key >= 0) {
         if (writeToTagsAtRow(row, key)) {
           successfullyWrittenToTags++;
@@ -655,7 +670,7 @@ void BatchWindow::writeDetectedToFiles() {
   setGuiDefaults();
 }
 
-bool BatchWindow::writeToTagsAtRow(int row, KeyFinder::key_t key) {
+auto BatchWindow::writeToTagsAtRow(int row, KeyFinder::key_t key) -> bool {
   AVFileMetadataFactory factory;
   AVFileMetadata* md = factory.createAVFileMetadata(ui->tableWidget->item(row, COL_FILEPATH)->text());
   MetadataWriteResult written = md->writeKeyToMetadata(key, prefs);
@@ -678,12 +693,12 @@ bool BatchWindow::writeToTagsAtRow(int row, KeyFinder::key_t key) {
   return altered;
 }
 
-bool BatchWindow::writeToFilenameAtRow(int row, KeyFinder::key_t key) {
+auto BatchWindow::writeToFilenameAtRow(int row, KeyFinder::key_t key) -> bool {
 
   QString currentFilename = ui->tableWidget->item(row, COL_FILEPATH)->text();
   QStringList newFilename = writeKeyToFilename(currentFilename, key, prefs);
 
-  if (newFilename.size() > 0) {
+  if (!newFilename.empty()) {
     // reflect changes in table widget
     QString path = newFilename[0];
     QString name = newFilename[1];
@@ -707,10 +722,19 @@ void BatchWindow::clearDetected() {
         ui->tableWidget->item(row, COL_STATUS)->setText(STATUS_TAGSREAD);
         ui->tableWidget->item(row, COL_DETECTED_KEY)->setText("");
         // clear text colours
-        for (int col = 0; col < ui->tableWidget->columnCount(); col++)
-          if (!ui->tableWidget->isColumnHidden(col))
-            if (ui->tableWidget->item(row, col) != 0)
+        for (int col = 0; col < ui->tableWidget->columnCount(); col++) { { {
+          if (!ui->tableWidget->isColumnHidden(col)) { { {
+            if (ui->tableWidget->item(row, col) != 0) { { {
               ui->tableWidget->item(row, col)->setForeground(textDefault);
+}
+}
+}
+}
+}
+}
+}
+}
+}
       }
       rowsCleared.push_back(row);
     }
@@ -751,15 +775,23 @@ void BatchWindow::copySelectedFromTableWidget() {
   foreach(QModelIndex selectedIndex,ui->tableWidget->selectionModel()->selectedIndexes()) {
     int chkRow = selectedIndex.row();
     int chkCol = selectedIndex.column();
-    if (chkRow < firstRow) firstRow = chkRow;
-    if (chkRow > lastRow)  lastRow = chkRow;
-    if (chkCol < firstCol) firstCol = chkCol;
-    if (chkCol > lastCol)  lastCol = chkCol;
+    if (chkRow < firstRow) { { firstRow = chkRow;
+}
+}
+    if (chkRow > lastRow) { {  lastRow = chkRow;
+}
+}
+    if (chkCol < firstCol) { { firstCol = chkCol;
+}
+}
+    if (chkCol > lastCol) { {  lastCol = chkCol;
+}
+}
   }
   for (int r = firstRow; r <= lastRow; r++) {
     for (int c = firstCol; c <= lastCol; c++) {
       QTableWidgetItem* item = ui->tableWidget->item(r,c);
-      if (item != NULL && item->isSelected()) {
+      if (item != nullptr && item->isSelected()) {
         copyArray.append(item->text());
       }
       if (c != lastCol) {

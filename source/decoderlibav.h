@@ -36,13 +36,14 @@
 #ifndef INT64_C
 #define UINT64_C(c) (c ## ULL)
 #endif
-#define INBUF_SIZE 4096
-#define AUDIO_INBUF_SIZE 20480
-#define AUDIO_REFILL_THRESH 4096
+constexpr int INBUF_SIZE = 4096;
+constexpr int AUDIO_INBUF_SIZE = 20480;
+constexpr int AUDIO_REFILL_THRESH = 4096;
 extern "C"{
 #include <libavutil/avutil.h>
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
+#include <libswresample/swresample.h>
 }
 
 #ifdef Q_OS_WIN
@@ -51,9 +52,9 @@ extern "C"{
 
 class AudioFileDecoder {
 public:
-  AudioFileDecoder(const QString&, const int);
+  AudioFileDecoder(const QString&, int);
   ~AudioFileDecoder();
-  KeyFinder::AudioData* decodeNextAudioPacket();
+  auto decodeNextAudioPacket() -> KeyFinder::AudioData*;
 private:
   void free();
   char* filePathCh;
@@ -67,8 +68,8 @@ private:
   AVFormatContext* fCtx;
   AVCodecContext* cCtx;
   AVDictionary* dict; // stays NULL, just here for legibility
-  ReSampleContext* rsCtx;
-  bool decodePacket(AVPacket*, KeyFinder::AudioData*);
+  SwrContext* rsCtx;
+  auto decodePacket(AVPacket*, KeyFinder::AudioData*) -> bool;
 };
 
 #endif
