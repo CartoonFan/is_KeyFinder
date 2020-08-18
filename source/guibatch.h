@@ -100,9 +100,9 @@ private:
   QList<QUrl> droppedFiles;
   void addDroppedFiles();
   QFutureWatcher<void>* addFilesWatcher;
-  QList<QUrl> getDirectoryContents(QDir) const;
+  QList<QUrl> getDirectoryContents(const QDir&) const;
 
-  void addNewRow(QString);
+  void addNewRow(const QString&);
   QFutureWatcher<MetadataReadResult>* metadataReadWatcher;
   void readMetadata();
 
@@ -152,7 +152,7 @@ private slots:
   void progressRangeChanged(int, int);
   void progressValueChanged(int);
 
-  void receiveNetworkReply(QNetworkReply*);
+  static void receiveNetworkReply(QNetworkReply*);
 };
 
 #endif
