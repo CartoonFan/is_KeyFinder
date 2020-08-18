@@ -35,16 +35,20 @@
 
 #define READ_STANDALONE_FAIL "Standalone %s playlist: failed reading '%s'"
 #define READ_STANDALONE_BEGIN "Standalone %s playlist: reading contents of '%s'"
-#define READ_STANDALONE_END "Standalone %s playlist: successfully read %d entries"
+#define READ_STANDALONE_END                                                    \
+  "Standalone %s playlist: successfully read %d entries"
 
 QMutex externalPlaylistMutex;
 
-ExternalPlaylist::ExternalPlaylist(const QString& n, const external_playlist_source_t s) : tracks() {
+ExternalPlaylist::ExternalPlaylist(const QString &n,
+                                   const external_playlist_source_t s)
+    : tracks() {
   name = n;
   source = s;
 }
 
-QList<ExternalPlaylist> ExternalPlaylistProvider::readLibrary(const Preferences& prefs) {
+QList<ExternalPlaylist>
+ExternalPlaylistProvider::readLibrary(const Preferences &prefs) {
   QList<ExternalPlaylist> playlists;
   playlists << readPlaylistsFromITunesLibrary(prefs);
   playlists << readPlaylistsFromTraktorLibrary(prefs);
@@ -52,8 +56,9 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readLibrary(const Preferences&
   return playlists;
 }
 
-
-QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromITunesLibrary(const Preferences& prefs) {
+QList<ExternalPlaylist>
+ExternalPlaylistProvider::readPlaylistsFromITunesLibrary(
+    const Preferences &prefs) {
 
   QMutexLocker locker(&externalPlaylistMutex);
   QFile xmlFile(prefs.getITunesLibraryPath());
@@ -61,11 +66,13 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromITunesLibrary
 
   if (!xmlFile.open(QIODevice::ReadOnly)) {
 
-    qDebug(READ_LIBRARY_FAIL, ITUNES, prefs.getITunesLibraryPath().toUtf8().constData());
+    qDebug(READ_LIBRARY_FAIL, ITUNES,
+           prefs.getITunesLibraryPath().toUtf8().constData());
 
   } else {
 
-    qDebug(READ_LIBRARY_BEGIN, ITUNES, prefs.getITunesLibraryPath().toUtf8().constData());
+    qDebug(READ_LIBRARY_BEGIN, ITUNES,
+           prefs.getITunesLibraryPath().toUtf8().constData());
     results = readPlaylistsFromITunesFile(xmlFile);
     qDebug(READ_LIBRARY_END, ITUNES, results.size());
   }
@@ -83,7 +90,8 @@ enum itunes_library_state_t {
   ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_DICT,
 };
 
-QList<ExternalPlaylist>ExternalPlaylistProvider::readPlaylistsFromITunesFile(QFile& xmlFile) {
+QList<ExternalPlaylist>
+ExternalPlaylistProvider::readPlaylistsFromITunesFile(QFile &xmlFile) {
 
   itunes_library_state_t state = ITUNES_LIBRARY_STATE_OUTSIDE;
 
@@ -96,9 +104,10 @@ QList<ExternalPlaylist>ExternalPlaylistProvider::readPlaylistsFromITunesFile(QFi
   QString currentTrackID;
 
   ExternalPlaylist *currentPlaylist = NULL;
-  QStringList defaultPlaylistNames = GuiStrings::getInstance()->iTunesDefaultPlaylists();
+  QStringList defaultPlaylistNames =
+      GuiStrings::getInstance()->iTunesDefaultPlaylists();
 
-  //Reading from the file
+  // Reading from the file
   while (!xmlReader.atEnd()) {
 
     xmlReader.readNext();
@@ -110,14 +119,16 @@ QList<ExternalPlaylist>ExternalPlaylistProvider::readPlaylistsFromITunesFile(QFi
 
         key = xmlReader.readElementText();
 
-      } else if (state == ITUNES_LIBRARY_STATE_TRACKS_TRACK_DICT && key == "Track ID") {
+      } else if (state == ITUNES_LIBRARY_STATE_TRACKS_TRACK_DICT &&
+                 key == "Track ID") {
 
         if (currentTrackID.isEmpty()) {
 
           currentTrackID = xmlReader.readElementText();
         }
 
-      } else if (state == ITUNES_LIBRARY_STATE_TRACKS_TRACK_DICT && key == "Location") {
+      } else if (state == ITUNES_LIBRARY_STATE_TRACKS_TRACK_DICT &&
+                 key == "Location") {
 
         if (!currentTrackID.isEmpty()) {
 
@@ -129,10 +140,12 @@ QList<ExternalPlaylist>ExternalPlaylistProvider::readPlaylistsFromITunesFile(QFi
 
         if (currentPlaylist == NULL) {
 
-          currentPlaylist = new ExternalPlaylist(xmlReader.readElementText(), EXTERNAL_PLAYLIST_SOURCE_ITUNES);
+          currentPlaylist = new ExternalPlaylist(
+              xmlReader.readElementText(), EXTERNAL_PLAYLIST_SOURCE_ITUNES);
         }
 
-      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_DICT && key == "Track ID") {
+      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_DICT &&
+                 key == "Track ID") {
 
         if (currentPlaylist != NULL) {
 
@@ -141,50 +154,61 @@ QList<ExternalPlaylist>ExternalPlaylistProvider::readPlaylistsFromITunesFile(QFi
           currentPlaylist->tracks.push_back(trackURL);
         }
 
-      } else if (state == ITUNES_LIBRARY_STATE_OUTSIDE && elementName == "dict" && key == "Tracks") {
+      } else if (state == ITUNES_LIBRARY_STATE_OUTSIDE &&
+                 elementName == "dict" && key == "Tracks") {
 
         state = ITUNES_LIBRARY_STATE_TRACKS_OUTER_DICT;
 
-      } else if (state == ITUNES_LIBRARY_STATE_TRACKS_OUTER_DICT && elementName == "dict") {
+      } else if (state == ITUNES_LIBRARY_STATE_TRACKS_OUTER_DICT &&
+                 elementName == "dict") {
 
         state = ITUNES_LIBRARY_STATE_TRACKS_TRACK_DICT;
 
-      } else if (state == ITUNES_LIBRARY_STATE_OUTSIDE && elementName == "array" && key == "Playlists") {
+      } else if (state == ITUNES_LIBRARY_STATE_OUTSIDE &&
+                 elementName == "array" && key == "Playlists") {
 
         state = ITUNES_LIBRARY_STATE_PLAYLISTS_ARRAY;
 
-      } else if (state == ITUNES_LIBRARY_STATE_PLAYLISTS_ARRAY && elementName == "dict") {
+      } else if (state == ITUNES_LIBRARY_STATE_PLAYLISTS_ARRAY &&
+                 elementName == "dict") {
 
         state = ITUNES_LIBRARY_STATE_PLAYLIST_DICT;
 
-      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_DICT && elementName == "array" && key == "Playlist Items") {
+      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_DICT &&
+                 elementName == "array" && key == "Playlist Items") {
 
         state = ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_ARRAY;
 
-      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_ARRAY && elementName == "dict") {
+      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_ARRAY &&
+                 elementName == "dict") {
 
         state = ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_DICT;
       }
 
     } else if (xmlReader.isEndElement()) {
 
-      if (state == ITUNES_LIBRARY_STATE_TRACKS_TRACK_DICT && elementName == "dict") {
+      if (state == ITUNES_LIBRARY_STATE_TRACKS_TRACK_DICT &&
+          elementName == "dict") {
 
         state = ITUNES_LIBRARY_STATE_TRACKS_OUTER_DICT;
 
-      } else if (state == ITUNES_LIBRARY_STATE_TRACKS_OUTER_DICT && elementName == "dict") {
+      } else if (state == ITUNES_LIBRARY_STATE_TRACKS_OUTER_DICT &&
+                 elementName == "dict") {
 
         state = ITUNES_LIBRARY_STATE_OUTSIDE;
 
-      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_DICT && elementName == "dict") {
+      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_DICT &&
+                 elementName == "dict") {
 
         state = ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_ARRAY;
 
-      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_ARRAY && elementName == "array") {
+      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_TRACK_ARRAY &&
+                 elementName == "array") {
 
         state = ITUNES_LIBRARY_STATE_PLAYLIST_DICT;
 
-      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_DICT && elementName == "dict") {
+      } else if (state == ITUNES_LIBRARY_STATE_PLAYLIST_DICT &&
+                 elementName == "dict") {
 
         if (currentPlaylist != NULL) {
 
@@ -202,11 +226,11 @@ QList<ExternalPlaylist>ExternalPlaylistProvider::readPlaylistsFromITunesFile(QFi
 
         state = ITUNES_LIBRARY_STATE_PLAYLISTS_ARRAY;
 
-      } else if (state == ITUNES_LIBRARY_STATE_PLAYLISTS_ARRAY && elementName == "array") {
+      } else if (state == ITUNES_LIBRARY_STATE_PLAYLISTS_ARRAY &&
+                 elementName == "array") {
 
         state = ITUNES_LIBRARY_STATE_OUTSIDE;
       }
-
     }
   }
 
@@ -221,7 +245,9 @@ enum traktor_library_state_t {
   TRAKTOR_LIBRARY_STATE_PLAYLIST_ENTRY,
 };
 
-QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromTraktorLibrary(const Preferences& prefs) {
+QList<ExternalPlaylist>
+ExternalPlaylistProvider::readPlaylistsFromTraktorLibrary(
+    const Preferences &prefs) {
 
   QMutexLocker locker(&externalPlaylistMutex);
   QList<ExternalPlaylist> results;
@@ -229,20 +255,23 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromTraktorLibrar
 
   if (!xmlFile.open(QIODevice::ReadOnly)) {
 
-    qDebug(READ_LIBRARY_FAIL, TRAKTOR, prefs.getTraktorLibraryPath().toUtf8().constData());
+    qDebug(READ_LIBRARY_FAIL, TRAKTOR,
+           prefs.getTraktorLibraryPath().toUtf8().constData());
     return results;
 
   } else {
 
-    qDebug(READ_LIBRARY_BEGIN, TRAKTOR, prefs.getTraktorLibraryPath().toUtf8().constData());
+    qDebug(READ_LIBRARY_BEGIN, TRAKTOR,
+           prefs.getTraktorLibraryPath().toUtf8().constData());
 
     traktor_library_state_t state = TRAKTOR_LIBRARY_STATE_OUTSIDE;
 
     QXmlStreamReader xmlReader(&xmlFile);
     ExternalPlaylist *currentPlaylist = NULL;
-    QStringList defaultPlaylistNames = GuiStrings::getInstance()->traktorDefaultPlaylists();
+    QStringList defaultPlaylistNames =
+        GuiStrings::getInstance()->traktorDefaultPlaylists();
 
-    //Reading from the file
+    // Reading from the file
     while (!xmlReader.atEnd()) {
 
       xmlReader.readNext();
@@ -250,36 +279,45 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromTraktorLibrar
 
       if (xmlReader.isStartElement()) {
 
-        if (state == TRAKTOR_LIBRARY_STATE_OUTSIDE && elementName == "PLAYLISTS") {
+        if (state == TRAKTOR_LIBRARY_STATE_OUTSIDE &&
+            elementName == "PLAYLISTS") {
 
           state = TRAKTOR_LIBRARY_STATE_PLAYLISTS;
 
-        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLISTS && elementName == "NODE") {
+        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLISTS &&
+                   elementName == "NODE") {
 
           QXmlStreamAttributes atts = xmlReader.attributes();
 
-          if (atts.hasAttribute("TYPE") && atts.hasAttribute("NAME") && atts.value("TYPE") == "PLAYLIST") {
+          if (atts.hasAttribute("TYPE") && atts.hasAttribute("NAME") &&
+              atts.value("TYPE") == "PLAYLIST") {
 
             if (currentPlaylist == NULL) {
-              currentPlaylist = new ExternalPlaylist(atts.value("NAME").toString(), EXTERNAL_PLAYLIST_SOURCE_TRAKTOR);
+              currentPlaylist =
+                  new ExternalPlaylist(atts.value("NAME").toString(),
+                                       EXTERNAL_PLAYLIST_SOURCE_TRAKTOR);
             }
 
             state = TRAKTOR_LIBRARY_STATE_PLAYLIST_NODE;
           }
 
-        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_NODE && elementName == "PLAYLIST") {
+        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_NODE &&
+                   elementName == "PLAYLIST") {
 
           state = TRAKTOR_LIBRARY_STATE_PLAYLIST_PROPER;
 
-        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_PROPER && elementName == "ENTRY") {
+        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_PROPER &&
+                   elementName == "ENTRY") {
 
           state = TRAKTOR_LIBRARY_STATE_PLAYLIST_ENTRY;
 
-        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_ENTRY && elementName == "PRIMARYKEY") {
+        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_ENTRY &&
+                   elementName == "PRIMARYKEY") {
 
           QXmlStreamAttributes atts = xmlReader.attributes();
 
-          if (currentPlaylist != NULL && atts.hasAttribute("TYPE") && atts.hasAttribute("KEY") && atts.value("TYPE") == "TRACK") {
+          if (currentPlaylist != NULL && atts.hasAttribute("TYPE") &&
+              atts.hasAttribute("KEY") && atts.value("TYPE") == "TRACK") {
 
             QString trackURLString = atts.value("KEY").toString();
             QUrl trackURL = fixTraktorAddressing(trackURLString);
@@ -289,15 +327,18 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromTraktorLibrar
 
       } else if (xmlReader.isEndElement()) {
 
-        if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_ENTRY && elementName == "ENTRY") {
+        if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_ENTRY &&
+            elementName == "ENTRY") {
 
           state = TRAKTOR_LIBRARY_STATE_PLAYLIST_PROPER;
 
-        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_PROPER && elementName == "PLAYLIST") {
+        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_PROPER &&
+                   elementName == "PLAYLIST") {
 
           state = TRAKTOR_LIBRARY_STATE_PLAYLIST_NODE;
 
-        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_NODE && elementName == "NODE") {
+        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLIST_NODE &&
+                   elementName == "NODE") {
 
           if (currentPlaylist != NULL) {
 
@@ -315,7 +356,8 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromTraktorLibrar
 
           state = TRAKTOR_LIBRARY_STATE_PLAYLISTS;
 
-        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLISTS && elementName == "PLAYLISTS") {
+        } else if (state == TRAKTOR_LIBRARY_STATE_PLAYLISTS &&
+                   elementName == "PLAYLISTS") {
 
           state = TRAKTOR_LIBRARY_STATE_OUTSIDE;
         }
@@ -328,15 +370,18 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromTraktorLibrar
   }
 }
 
-QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromSeratoLibrary(const Preferences& prefs) {
+QList<ExternalPlaylist>
+ExternalPlaylistProvider::readPlaylistsFromSeratoLibrary(
+    const Preferences &prefs) {
 
   QMutexLocker locker(&externalPlaylistMutex);
   QList<ExternalPlaylist> results;
 
-  qDebug(READ_LIBRARY_BEGIN, SERATO, prefs.getSeratoLibraryPath().toUtf8().constData());
+  qDebug(READ_LIBRARY_BEGIN, SERATO,
+         prefs.getSeratoLibraryPath().toUtf8().constData());
 
   QString path = prefs.getSeratoLibraryPath();
-  path = path.left(path.lastIndexOf("/")+1);
+  path = path.left(path.lastIndexOf("/") + 1);
 
   // Standard crates
 
@@ -345,10 +390,11 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromSeratoLibrary
   filters << "*.crate";
   QFileInfoList contents = dir.entryInfoList(filters);
 
-  for (int i = 0; i<(signed)contents.size(); i++) {
+  for (int i = 0; i < (signed)contents.size(); i++) {
 
-    ExternalPlaylist playlist(contents[i].baseName(), EXTERNAL_PLAYLIST_SOURCE_SERATO);
-    playlist.name = playlist.name.replace(QString("%%"),QString("/"));
+    ExternalPlaylist playlist(contents[i].baseName(),
+                              EXTERNAL_PLAYLIST_SOURCE_SERATO);
+    playlist.name = playlist.name.replace(QString("%%"), QString("/"));
     playlist.tracks = readSeratoLibraryPlaylist(playlist.name, prefs);
     results.push_back(playlist);
   }
@@ -360,10 +406,11 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromSeratoLibrary
   filters << "*.scrate";
   contents = dir.entryInfoList(filters);
 
-  for (int i = 0; i<(signed)contents.size(); i++) {
+  for (int i = 0; i < (signed)contents.size(); i++) {
 
-    ExternalPlaylist playlist(contents[i].baseName(), EXTERNAL_PLAYLIST_SOURCE_SERATO);
-    playlist.name = playlist.name.replace(QString("%%"),QString("/"));
+    ExternalPlaylist playlist(contents[i].baseName(),
+                              EXTERNAL_PLAYLIST_SOURCE_SERATO);
+    playlist.name = playlist.name.replace(QString("%%"), QString("/"));
     playlist.tracks = readSeratoLibraryPlaylist(playlist.name, prefs);
     results.push_back(playlist);
   }
@@ -372,32 +419,40 @@ QList<ExternalPlaylist> ExternalPlaylistProvider::readPlaylistsFromSeratoLibrary
   return results;
 }
 
-QList<QUrl> ExternalPlaylistProvider::readSeratoLibraryPlaylist(const QString& playlistName, const Preferences& prefs) {
+QList<QUrl>
+ExternalPlaylistProvider::readSeratoLibraryPlaylist(const QString &playlistName,
+                                                    const Preferences &prefs) {
 
   QList<QUrl> results;
 
   qDebug(READ_PLAYLIST_BEGIN, SERATO, playlistName.toUtf8().constData());
 
   QString path = prefs.getSeratoLibraryPath();
-  path = path.left(path.lastIndexOf("/")+1);
+  path = path.left(path.lastIndexOf("/") + 1);
 
   // is it a [sub]crate or a smartcrate?
   QString playlistNameCopy = playlistName;
   playlistNameCopy = playlistNameCopy.replace(QString("/"), QString("%%"));
 
-  QFile* crate = new QFile(path + GuiStrings::getInstance()->seratoSubcratesDirName() + QString("/") + playlistNameCopy + QString(".crate"));
+  QFile *crate =
+      new QFile(path + GuiStrings::getInstance()->seratoSubcratesDirName() +
+                QString("/") + playlistNameCopy + QString(".crate"));
   bool sub = true;
 
   if (!crate->exists()) {
 
     delete crate;
-    crate = new QFile(path + GuiStrings::getInstance()->seratoSmartCratesDirName() + QString("/") + playlistNameCopy + QString(".scrate"));
+    crate =
+        new QFile(path + GuiStrings::getInstance()->seratoSmartCratesDirName() +
+                  QString("/") + playlistNameCopy + QString(".scrate"));
     sub = false;
-    qDebug("Serato playlist: '%s' is a smartcrate", playlistName.toUtf8().constData());
+    qDebug("Serato playlist: '%s' is a smartcrate",
+           playlistName.toUtf8().constData());
 
   } else {
 
-    qDebug("Serato playlist: '%s' is a subcrate", playlistName.toUtf8().constData());
+    qDebug("Serato playlist: '%s' is a subcrate",
+           playlistName.toUtf8().constData());
   }
 
   // Serato path stuff
@@ -405,14 +460,17 @@ QList<QUrl> ExternalPlaylistProvider::readSeratoLibraryPlaylist(const QString& p
 #ifdef Q_OS_MAC
   QRegularExpression regex("^(/Volumes/[^/]+/)");
   QRegularExpressionMatch match = regex.match(prefs.getSeratoLibraryPath());
-  if (match.hasMatch()) pathPrefix = match.captured();
+  if (match.hasMatch())
+    pathPrefix = match.captured();
 #endif
 #ifdef Q_OS_WIN
   pathPrefix = prefs.getSeratoLibraryPath().left(3);
 #endif
   if (crate->open(QIODevice::ReadOnly)) {
     SeratoDataStream instr;
-    QStringList resultStrings = instr.readCrate(crate, (sub ? SeratoDataStream::SUBCRATE : SeratoDataStream::SMARTCRATE));
+    QStringList resultStrings =
+        instr.readCrate(crate, (sub ? SeratoDataStream::SUBCRATE
+                                    : SeratoDataStream::SMARTCRATE));
     for (int i = 0; i < (signed)resultStrings.size(); i++) {
       results.push_back(QUrl::fromLocalFile(pathPrefix + resultStrings[i]));
     }
@@ -423,7 +481,8 @@ QList<QUrl> ExternalPlaylistProvider::readSeratoLibraryPlaylist(const QString& p
   return results;
 }
 
-QList<QUrl> ExternalPlaylistProvider::readITunesStandalonePlaylist(const QString& playlistPath) {
+QList<QUrl> ExternalPlaylistProvider::readITunesStandalonePlaylist(
+    const QString &playlistPath) {
   QMutexLocker locker(&externalPlaylistMutex);
   QFile xmlFile(playlistPath);
   QList<ExternalPlaylist> results;
@@ -442,9 +501,9 @@ QList<QUrl> ExternalPlaylistProvider::readITunesStandalonePlaylist(const QString
   return results.first().tracks;
 }
 
-QList<QUrl> ExternalPlaylistProvider::readM3uStandalonePlaylist(const QString& m3uPath) {
+QList<QUrl>
+ExternalPlaylistProvider::readM3uStandalonePlaylist(const QString &m3uPath) {
   QList<QUrl> results;
-
 
   QFile m3uFile(m3uPath);
 
@@ -476,20 +535,21 @@ QList<QUrl> ExternalPlaylistProvider::readM3uStandalonePlaylist(const QString& m
   return results;
 }
 
-QUrl ExternalPlaylistProvider::fixITunesAddressing(const QString& address) {
+QUrl ExternalPlaylistProvider::fixITunesAddressing(const QString &address) {
   QString addressCopy = address;
   addressCopy = addressCopy.replace(QString("file://localhost"), QString(""));
   addressCopy = addressCopy.replace(QString("file://"), QString(""));
   addressCopy = QUrl::fromPercentEncoding(addressCopy.toUtf8().constData());
-  qDebug("Fixed iTunes address from %s to %s", address.toUtf8().constData(), addressCopy.toUtf8().constData());
+  qDebug("Fixed iTunes address from %s to %s", address.toUtf8().constData(),
+         addressCopy.toUtf8().constData());
   return QUrl::fromLocalFile(addressCopy);
 }
 
-QUrl ExternalPlaylistProvider::fixTraktorAddressing(const QString& address) {
+QUrl ExternalPlaylistProvider::fixTraktorAddressing(const QString &address) {
   QString addressCopy = address;
   addressCopy = addressCopy.replace(QString("/:"), QString("/"));
   addressCopy = addressCopy.prepend("/Volumes/");
-  qDebug("Fixed Traktor address from %s to %s", address.toUtf8().constData(), addressCopy.toUtf8().constData());
+  qDebug("Fixed Traktor address from %s to %s", address.toUtf8().constData(),
+         addressCopy.toUtf8().constData());
   return QUrl::fromLocalFile(addressCopy);
 }
- 
