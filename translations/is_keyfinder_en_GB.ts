@@ -6,25 +6,29 @@
     <message>
         <location filename="../source/guiabout.cpp" line="28"/>
         <source>About %1</source>
-        <extracomment>The title of the About window; includes the app name at %1</extracomment>
+        <extracomment>The title of the About window;
+        includes the app name at %1</extracomment>
         <translation>About %1</translation>
     </message>
     <message>
         <location filename="../source/guiabout.cpp" line="35"/>
         <source>Copyright %1</source>
-        <extracomment>The copyright notice in the About window; includes the year and author name at %1</extracomment>
+        <extracomment>The copyright notice in the About window;
+        includes the year and author name at %1</extracomment>
         <translation>Copyright %1</translation>
     </message>
     <message>
         <location filename="../source/guiabout.cpp" line="40"/>
         <source>The %1 icon was designed by %2.</source>
-        <extracomment>Icon citation on the About window; includes the app name at %1 and the designer name at %2</extracomment>
+        <extracomment>Icon citation on the About window;
+        includes the app name at %1 and the designer name at %2</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../source/guiabout.cpp" line="46"/>
         <source>%1 includes library code from:</source>
-        <extracomment>Library list header on the About window; includes the app name at %1</extracomment>
+        <extracomment>Library list header on the About window;
+        includes the app name at %1</extracomment>
         <translation>%1 includes library code from:</translation>
     </message>
 </context>
@@ -135,55 +139,65 @@
     <message>
         <location filename="../source/guibatch.cpp" line="78"/>
         <source>%1 drag and drop</source>
-        <extracomment>The name of the drag-and-drop playlist; includes the app name at %1</extracomment>
+        <extracomment>The name of the drag-and-drop playlist;
+        includes the app name at %1</extracomment>
         <translation>%1 drag and drop</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="98"/>
         <source>Drag audio files here</source>
-        <extracomment>The initial help label on the Batch window</extracomment>
+        <extracomment>The initial help label
+                      on the Batch window</extracomment>
         <translation>Drag audio files here</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="117"/>
         <source>Copy</source>
-        <extracomment>An action in the Batch window context menu</extracomment>
+        <extracomment>An action in the
+                      Batch window context menu</extracomment>
         <translation>Copy</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="122"/>
         <source>Write key to file</source>
-        <extracomment>An action in the Batch window context menu</extracomment>
+        <extracomment>An action in the
+                      Batch window context menu</extracomment>
         <translation>Write key to file</translation>
     </message>
     <message>
         <source>Run detailed analysis</source>
-        <extracomment>An action in the Batch window context menu</extracomment>
+        <extracomment>An action in the
+                      Batch window context menu</extracomment>
         <translation type="vanished">Run detailed analysis</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="127"/>
         <source>Delete selected rows</source>
-        <extracomment>An action in the Batch window context menu</extracomment>
+        <extracomment>An action in the
+                      Batch window context menu</extracomment>
         <translation>Delete selected rows</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="132"/>
         <source>Clear detected keys</source>
-        <extracomment>An action in the Batch window context menu</extracomment>
+        <extracomment>An action in the
+                      Batch window context menu</extracomment>
         <translation>Clear detected keys</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="247"/>
         <source>The drag and drop list will not be saved.</source>
-        <extracomment>An alert message in the Batch window; first line</extracomment>
+        <extracomment>An alert message in the Batch window;
+                      first line</extracomment>
         <translation>The drag and drop list will not be saved.</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="249"/>
         <source>Are you sure you want to view another playlist?</source>
-        <extracomment>An alert message in the Batch window; second line</extracomment>
-        <translation>Are you sure you want to view another playlist?</translation>
+        <extracomment>An alert message in the Batch window;
+                      second line</extracomment>
+        <translation>Are you sure you want
+                     to view another playlist?</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="271"/>
@@ -230,7 +244,8 @@
     <message>
         <location filename="../source/guibatch.cpp" line="551"/>
         <source>Skipped</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+                      in the Batch window</extracomment>
         <translation>Skipped</translation>
     </message>
     <message>
@@ -242,7 +257,8 @@
     <message>
         <location filename="../source/guibatch.cpp" line="605"/>
         <source>Exception: %1</source>
-        <extracomment>Status of an individual file in the Batch window; includes an exception message at %1</extracomment>
+        <extracomment>Status of an individual file in the Batch window;
+                      includes an exception message at %1</extracomment>
         <translation>Exception: %1</translation>
     </message>
     <message>
@@ -254,7 +270,9 @@
     <message>
         <location filename="../source/guibatch.cpp" line="649"/>
         <source>Data written to %1 and %2</source>
-        <extracomment>An alert message in the Batch window; contains &quot;N tags&quot; at %1 and &quot;N filenames&quot; at %2</extracomment>
+        <extracomment>An alert message in the Batch window;
+                      contains &quot;N tags&quot; at %1
+                      and &quot;N filenames&quot; at %2</extracomment>
         <translation>Data written to %1 and %2</translation>
     </message>
     <message numerus="yes">
@@ -288,13 +306,19 @@
     <message>
         <source>Please select a single row for detailed analysis</source>
         <extracomment>An alert message in the Batch window</extracomment>
-        <translation type="vanished">Please select a single row for detailed analysis</translation>
+        <translation type="vanished">Please select a single row
+                                     for detailed analysis</translation>
     </message>
     <message>
         <location filename="../source/guibatch.cpp" line="834"/>
-        <source>A new version, %1, is available on &lt;a href=&apos;%2&apos;&gt;the %3 website&lt;/a&gt;!</source>
-        <extracomment>An alert message in the Batch window; includes a version number at %1, a URL at %2, and the app name at %3</extracomment>
-        <translation>A new version, %1, is available on &lt;a href=&apos;%2&apos;&gt;the %3 website&lt;/a&gt;!</translation>
+        <source>A new version, %1, is available on &lt;a href=&apos;%2&apos;
+                &gt;the %3 website&lt;/a&gt;!</source>
+        <extracomment>An alert message in the Batch window;
+                      includes a version number at %1, a URL at %2,
+                      and the app name at %3</extracomment>
+        <translation>A new version, %1, is available on &lt;
+                     a href=&apos;%2&apos;&gt;
+                     the %3 website&lt;/a&gt;!</translation>
     </message>
 </context>
 <context>
@@ -310,7 +334,8 @@
     </message>
     <message>
         <source>Drag an audio file onto the window</source>
-        <translation type="vanished">Drag an audio file onto the window</translation>
+        <translation type="vanished">Drag an audio file
+                                     onto the window</translation>
     </message>
     <message>
         <source>Detailed Analysis</source>
@@ -318,20 +343,45 @@
         <translation type="vanished">Detailed Analysis</translation>
     </message>
     <message>
-        <source>Choose the colour scheme for the chromagram. Some provide higher contrast than others.</source>
+        <source>Choose the colour scheme for the chromagram.
+                Some provide higher contrast than others.</source>
         <extracomment>A tooltip on the Detail window</extracomment>
-        <translation type="vanished">Choose the colour scheme for the chromagram. Some provide higher contrast than others.</translation>
+        <translation type="vanished">Choose the colour scheme
+                                     for the chromagram.
+                                     Some provide higher
+                                     contrast than others.</translation>
     </message>
     <message>
-        <source>This is the colour scale of the current chromagram. You can change the colour scheme using the dropdown below.</source>
+        <source>This is the colour scale of the current chromagram.
+                You can change the colour scheme
+                using the dropdown below.</source>
         <extracomment>A tooltip on the Detail window</extracomment>
-        <translation type="vanished">This is the colour scale of the current chromagram. You can change the colour scheme using the dropdown below.</translation>
+        <translation type="vanished">This is the colour scale
+                                     of the current chromagram.
+                                     You can change the colour scheme
+                                     using the dropdown below.</translation>
     </message>
     <message>
-        <source>This chromagram spans %1. The vertical axis represents musical frequencies as indicated by the piano keyboard. The horizontal axis splits the track into analysis windows of a few seconds each. The brighter the colour, the higher the energy found at that frequency during that window.</source>
-        <oldsource>This chromagram spans %1. The vertical axis represents musical frequencies as indicated by the piano keyboard. The horizontal axis splits the track into analysis windows of about %1 seconds each. The brighter the colour, the higher the energy found at that frequency during that window.</oldsource>
+        <source>This chromagram spans %1.
+        The vertical axis represents musical frequencies
+        as indicated by the piano keyboard.
+        The horizontal axis splits the track into analysis windows
+        of a few seconds each. The brighter the colour, the higher the energy
+        found at that frequency during that window.</source>
+        <oldsource>This chromagram spans %1.
+        The vertical axis represents musical frequencies
+        as indicated by the piano keyboard.
+        The horizontal axis splits the track into analysis windows
+        of about %1 seconds each. The brighter the colour,
+        the higher the energy found
+        at that frequency during that window.</oldsource>
         <extracomment>A tooltip on the Detail window</extracomment>
-        <translation type="vanished">This chromagram spans %1. The vertical axis represents musical frequencies as indicated by the piano keyboard. The horizontal axis splits the track into analysis windows of a few seconds each. The brighter the colour, the higher the energy found at that frequency during that window.</translation>
+        <translation type="vanished">This chromagram spans %1.
+        The vertical axis represents musical frequencies as indicated
+        by the piano keyboard. The horizontal axis splits the track
+        into analysis windows of a few seconds each.
+        The brighter the colour, the higher the energy found at that
+        frequency during that window.</translation>
     </message>
     <message numerus="yes">
         <source>%n octave(s)</source>
@@ -346,34 +396,47 @@
         <translation type="vanished">Analysing... </translation>
     </message>
     <message>
-        <source>This is the same chromagram data, reduced to a single octave.</source>
+        <source>This is the same chromagram data,
+                reduced to a single octave.</source>
         <extracomment>A tooltip on the Detail window</extracomment>
-        <translation type="vanished">This is the same chromagram data, reduced to a single octave.</translation>
+        <translation type="vanished">This is the same chromagram data,
+                                     reduced to a single octave.</translation>
     </message>
     <message>
-        <source>This row shows the key estimate for the unsegmented chromagram.</source>
+        <source>This row shows the key estimate
+                for the unsegmented chromagram.</source>
         <extracomment>A tooltip on the Detail window</extracomment>
-        <translation type="vanished">This row shows the key estimate for the unsegmented chromagram.</translation>
+        <translation type="vanished">This row shows the
+                                     key estimate for the
+                                     unsegmented chromagram.</translation>
     </message>
     <message>
-        <source>This row shows the key estimates for the arbitrary segments.</source>
+        <source>This row shows the key estimates
+                for the arbitrary segments.</source>
         <extracomment>A tooltip on the Detail window</extracomment>
-        <translation type="vanished">This row shows the key estimates for the arbitrary segments.</translation>
+        <translation type="vanished">This row shows the key estimates
+                                     for the arbitrary segments.</translation>
     </message>
     <message>
-        <source>This row shows the key estimates for the segments between peak harmonic changes.</source>
+        <source>This row shows the key estimates for the segments
+                between peak harmonic changes.</source>
         <extracomment>A tooltip on the Detail window</extracomment>
-        <translation type="vanished">This row shows the key estimates for the segments between peak harmonic changes.</translation>
+        <translation type="vanished">This row shows the key estimates
+                                     for the segments between
+                                     peak harmonic changes.</translation>
     </message>
     <message>
         <source>Key estimate: %1</source>
-        <extracomment>Text in the Batch window status bar; includes a key code at %1</extracomment>
+        <extracomment>Text in the Batch window status bar;
+                      includes a key code at %1</extracomment>
         <translation type="vanished">Key estimate: %1</translation>
     </message>
     <message>
         <source>Drag an audio file onto the window.</source>
-        <extracomment>The initial help tooltip on the Detail window</extracomment>
-        <translation type="vanished">Drag an audio file onto the window.</translation>
+        <extracomment>The initial help tooltip
+                      on the Detail window</extracomment>
+        <translation type="vanished">Drag an audio file
+                                     onto the window.</translation>
     </message>
 </context>
 <context>
@@ -381,194 +444,226 @@
     <message>
         <location filename="../source/strings.cpp" line="46"/>
         <source>N/A</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+                      in the Batch window</extracomment>
         <translation>N/A</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="62"/>
         <source>Library</source>
-        <extracomment>Name of the main iTunes library (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of the main iTunes library
+                      (to exclude from the Batch window)</extracomment>
         <translation>Library</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="64"/>
         <source>Music</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>Music</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="66"/>
         <source>Movies</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>Movies</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="68"/>
         <source>Films</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>Films</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="70"/>
         <source>TV Shows</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>TV Shows</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="72"/>
         <source>TV Programmes</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>TV Programmes</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="74"/>
         <source>Podcasts</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>Podcasts</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="76"/>
         <source>Books</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>Books</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="78"/>
         <source>Purchased</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>Purchased</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="80"/>
         <source>Genius</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>Genius</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="82"/>
         <source>iTunes DJ</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation>iTunes DJ</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="84"/>
         <source>Audiobooks</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="86"/>
         <source>Music Videos</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="88"/>
         <source>Rentals</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="90"/>
         <source>Home Videos</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+                      (to exclude from the Batch window)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="92"/>
         <source>iTunes U</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+        (to exclude from the Batch window)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="94"/>
         <source>PDFs</source>
-        <extracomment>Name of a default iTunes playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default iTunes playlist
+        (to exclude from the Batch window)</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="103"/>
         <source>_LOOPS</source>
-        <extracomment>Name of a default Traktor playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default Traktor playlist
+        (to exclude from the Batch window)</extracomment>
         <translation>_LOOPS</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="105"/>
         <source>_RECORDINGS</source>
-        <extracomment>Name of a default Traktor playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default Traktor playlist
+        (to exclude from the Batch window)</extracomment>
         <translation>_RECORDINGS</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="107"/>
         <source>Preparation</source>
-        <extracomment>Name of a default Traktor playlist (to exclude from the Batch window)</extracomment>
+        <extracomment>Name of a default Traktor playlist
+        (to exclude from the Batch window)</extracomment>
         <translation>Preparation</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="113"/>
         <source>SmartCrates</source>
-        <extracomment>Name of the Smart Crates subdirectory in Serato</extracomment>
+        <extracomment>Name of the Smart Crates subdirectory
+                      in Serato</extracomment>
         <translation>SmartCrates</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="118"/>
         <source>Subcrates</source>
-        <extracomment>Name of the Subcrates subdirectory in Serato</extracomment>
+        <extracomment>Name of the Subcrates subdirectory
+                      in Serato</extracomment>
         <translation>Subcrates</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="123"/>
         <source>Error in LibSRC sample rate conversion</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+                      in the Batch window</extracomment>
         <translation>Error in LibSRC sample rate conversion</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="128"/>
         <source>Could not open audio file (%1)</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+                      in the Batch window</extracomment>
         <translation>Could not open audio file (%1)</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="133"/>
         <source>Could not find stream information</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+        in the Batch window</extracomment>
         <translation>Could not find stream information</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="138"/>
         <source>Could not find an audio stream</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+        in the Batch window</extracomment>
         <translation>Could not find an audio stream</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="143"/>
         <source>Audio stream has unsupported codec</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+        in the Batch window</extracomment>
         <translation>Audio stream has unsupported codec</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="148"/>
         <source>Could not open audio codec %1 (%2)</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+        in the Batch window</extracomment>
         <translation>Could not open audio codec %1 (%2)</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="153"/>
         <source>Could not create ReSampleContext</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+        in the Batch window</extracomment>
         <translation>Could not create ReSampleContext</translation>
     </message>
     <message>
         <location filename="../source/strings.cpp" line="158"/>
         <source>Could not resample</source>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+        in the Batch window</extracomment>
         <translation>Could not resample</translation>
     </message>
     <message numerus="yes">
         <location filename="../source/strings.cpp" line="163"/>
         <source>%n bad packet(s)</source>
         <oldsource>%1 bad packets</oldsource>
-        <extracomment>Status of an individual file in the Batch window</extracomment>
+        <extracomment>Status of an individual file
+        in the Batch window</extracomment>
         <translation>
             <numerusform>%n bad packet</numerusform>
             <numerusform>%n bad packets</numerusform>
@@ -577,8 +672,11 @@
     <message>
         <location filename="../source/strings.cpp" line="168"/>
         <source>Duration (%1:%2) exceeds specified maximum (%3:00)</source>
-        <extracomment>Status of an individual file in the Batch window; includes minutes and seconds at %1:%2, and the max number of minutes at %3</extracomment>
-        <translation>Duration (%1:%2) exceeds specified maximum (%3:00)</translation>
+        <extracomment>Status of an individual file in the Batch window;
+        includes minutes and seconds at %1:%2,
+        and the max number of minutes at %3</extracomment>
+        <translation>Duration (%1:%2) exceeds
+                     specified maximum (%3:00)</translation>
     </message>
 </context>
 <context>
@@ -592,7 +690,8 @@
     <message>
         <location filename="../source/strings.cpp" line="56"/>
         <source>About %1</source>
-        <extracomment>Main menu option and title of About window, contains the app name at %1</extracomment>
+        <extracomment>Main menu option and title of About window,
+                      contains the app name at %1</extracomment>
         <translation type="unfinished">About %1</translation>
     </message>
 </context>
@@ -644,7 +743,8 @@ An action on the menu bar</extracomment>
     <message>
         <location filename="../forms/prefsdialog.ui" line="31"/>
         <source>Parallelise batch jobs (faster, but higher CPU load)</source>
-        <translation>Parallelise batch jobs (faster, but higher CPU load)</translation>
+        <translation>Parallelise batch jobs
+        (faster, but higher CPU load)</translation>
     </message>
     <message>
         <location filename="../forms/prefsdialog.ui" line="45"/>
@@ -653,8 +753,10 @@ An action on the menu bar</extracomment>
     </message>
     <message>
         <location filename="../forms/prefsdialog.ui" line="80"/>
-        <source>Write to tags/filenames automatically during batch jobs</source>
-        <translation>Write to tags/filenames automatically during batch jobs</translation>
+        <source>Write to tags/filenames automatically
+                during batch jobs</source>
+        <translation>Write to tags/filenames automatically
+                     during batch jobs</translation>
     </message>
     <message>
         <location filename="../forms/prefsdialog.ui" line="71"/>
@@ -899,7 +1001,8 @@ An action on the menu bar</extracomment>
     </message>
     <message>
         <source>Number of arbitrary segments</source>
-        <translation type="vanished">Number of arbitrary segments</translation>
+        <translation type="vanished">Number of
+                                     arbitrary segments</translation>
     </message>
     <message>
         <source>Classification</source>
@@ -961,44 +1064,57 @@ An action on the menu bar</extracomment>
         <translation>Save Preferences</translation>
     </message>
     <message>
-        <source>Changing these preferences may severely affect %1&apos;s accuracy. This is recommended for expert users only.</source>
-        <extracomment>The warning text on the Advanced Preferences tab; includes the app name at %1</extracomment>
-        <translation type="vanished">Changing these preferences may severely affect %1&apos;s accuracy. This is recommended for expert users only.</translation>
+        <source>Changing these preferences may severely affect
+                %1&apos;s accuracy. This is recommended
+                for expert users only.</source>
+        <extracomment>The warning text on the Advanced Preferences tab;
+                      includes the app name at %1</extracomment>
+        <translation type="vanished">Changing these preferences may
+                                     severely affect %1&apos;s accuracy.
+                                     This is recommended for expert users
+                                     only.</translation>
     </message>
     <message>
         <location filename="../source/guiprefs.cpp" line="218"/>
         <source>Choose iTunes Library XML</source>
-        <extracomment>File browse dialog launched from the Preferences window Title of file browse dialog launched from the Preferences window</extracomment>
+        <extracomment>File browse dialog launched
+                      from the Preferences window Title of file browse dialog
+                      launched from the Preferences window</extracomment>
         <translation>Choose iTunes Library XML</translation>
     </message>
     <message>
         <location filename="../source/guiprefs.cpp" line="221"/>
         <source>iTunes XML (*.xml)</source>
-        <extracomment>Filetype in file browse dialog launched from the Preferences window</extracomment>
+        <extracomment>Filetype in file browse dialog launched
+                      from the Preferences window</extracomment>
         <translation>iTunes XML (*.xml)</translation>
     </message>
     <message>
         <location filename="../source/guiprefs.cpp" line="239"/>
         <source>Choose Traktor Library NML</source>
-        <extracomment>Title of file browse dialog launched from the Preferences window</extracomment>
+        <extracomment>Title of file browse dialog launched
+                      from the Preferences window</extracomment>
         <translation>Choose Traktor Library NML</translation>
     </message>
     <message>
         <location filename="../source/guiprefs.cpp" line="242"/>
         <source>Traktor NML (*.nml)</source>
-        <extracomment>Filetype in file browse dialog launched from the Preferences window</extracomment>
+        <extracomment>Filetype in file browse dialog launched
+                      from the Preferences window</extracomment>
         <translation>Traktor NML (*.nml)</translation>
     </message>
     <message>
         <location filename="../source/guiprefs.cpp" line="260"/>
         <source>Choose Serato database</source>
-        <extracomment>Title of file browse dialog launched from the Preferences window</extracomment>
+        <extracomment>Title of file browse dialog launched
+                      from the Preferences window</extracomment>
         <translation>Choose Serato database</translation>
     </message>
     <message>
         <location filename="../source/guiprefs.cpp" line="263"/>
         <source>Serato database (*)</source>
-        <extracomment>Filetype in file browse dialog launched from the Preferences window</extracomment>
+        <extracomment>Filetype in file browse dialog launched
+                      from the Preferences window</extracomment>
         <translation>Serato database (*)</translation>
     </message>
 </context>
