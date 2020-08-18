@@ -40,7 +40,7 @@ class GuiStrings : public QObject {
   Q_OBJECT
 
 public:
-  static GuiStrings* getInstance();
+  static GuiStrings *getInstance();
   QString appName() const;
   QString appUrl() const;
   QString delim() const;
@@ -56,7 +56,7 @@ public:
   QString libavCouldNotFindStreamInformation() const;
   QString libavCouldNotFindAudioStream() const;
   QString libavUnsupportedCodec() const;
-  QString libavCouldNotOpenCodec(const char*, int) const;
+  QString libavCouldNotOpenCodec(const char *, int) const;
   QString libavCouldNotCreateResampleContext() const;
   QString libavCouldNotResample() const;
   QString libavTooManyBadPackets(int) const;
