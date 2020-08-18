@@ -203,7 +203,7 @@ auto AudioFileDecoder::decodeNextAudioPacket() -> KeyFinder::AudioData * {
     av_free_packet(&avpkt);
     qWarning("Encountered KeyFinder::Exception (%s) while decoding file %s",
              e.what(), filePathCh);
-    throw e;
+    throw;
   }
   av_free_packet(&avpkt);
   return audio;

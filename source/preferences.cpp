@@ -630,7 +630,7 @@ QString Preferences::newString(const QString &newData,
     dataToCheck.push_back(newData);
   // check
   QStringList::iterator iter;
-  for (iter = dataToCheck.begin(); iter != dataToCheck.end(); iter++) {
+  for (iter = dataToCheck.begin(); iter != dataToCheck.end(); ++iter) {
     if (charLimit) {
       *iter = (*iter).left(charLimit);
     }

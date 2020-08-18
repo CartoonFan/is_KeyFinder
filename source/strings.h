@@ -38,6 +38,7 @@ Don't translate anything that goes into the log file (qDebug / qCritical).
 
 class GuiStrings : public QObject {
   Q_OBJECT
+
 public:
   static GuiStrings* getInstance();
   QString appName() const;

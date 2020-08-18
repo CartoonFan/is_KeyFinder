@@ -59,7 +59,6 @@ KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject &object) {
     kf.finalChromagram(workspace);
     result.fullChromagram = KeyFinder::Chromagram(*workspace.chromagram);
     result.core = kf.keyOfChromagram(workspace);
-
   } catch (std::exception &e) {
     if (decoder != NULL)
       delete decoder;
