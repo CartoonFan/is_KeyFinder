@@ -24,25 +24,25 @@
 
 #include <iomanip>
 
-#include <QString>
-#include <QMutex>
 #include <QFile>
+#include <QMutex>
+#include <QString>
 
-#include "keyfinder/exception.h"
 #include "keyfinder/audiodata.h"
+#include "keyfinder/exception.h"
 
 #include "strings.h"
 
 #ifndef INT64_C
-#define UINT64_C(c) (c ## ULL)
+#define UINT64_C(c) (c##ULL)
 #endif
 constexpr int INBUF_SIZE = 4096;
 constexpr int AUDIO_INBUF_SIZE = 20480;
 constexpr int AUDIO_REFILL_THRESH = 4096;
 extern "C" {
-#include <libavutil/avutil.h>
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
+#include <libavutil/avutil.h>
 #include <libswresample/swresample.h>
 }
 
@@ -52,24 +52,25 @@ extern "C" {
 
 class AudioFileDecoder {
 public:
-    AudioFileDecoder(const QString&, int);
-    ~AudioFileDecoder();
-    auto decodeNextAudioPacket() -> KeyFinder::AudioData*;
+  AudioFileDecoder(const QString &, int);
+  ~AudioFileDecoder();
+  auto decodeNextAudioPacket() -> KeyFinder::AudioData *;
+
 private:
-    void free();
-    char* filePathCh;
-    uint8_t* frameBuffer;
-    uint8_t* frameBufferConverted;
-    int frameBufferSize;
-    int audioStream;
-    int badPacketCount;
-    int badPacketThreshold;
-    AVCodec* codec;
-    AVFormatContext* fCtx;
-    AVCodecContext* cCtx;
-    AVDictionary* dict; // stays NULL, just here for legibility
-    SwrContext* rsCtx;
-    auto decodePacket(AVPacket*, KeyFinder::AudioData*) -> bool;
+  void free();
+  char *filePathCh;
+  uint8_t *frameBuffer;
+  uint8_t *frameBufferConverted;
+  int frameBufferSize;
+  int audioStream;
+  int badPacketCount;
+  int badPacketThreshold;
+  AVCodec *codec;
+  AVFormatContext *fCtx;
+  AVCodecContext *cCtx;
+  AVDictionary *dict; // stays NULL, just here for legibility
+  SwrContext *rsCtx;
+  auto decodePacket(AVPacket *, KeyFinder::AudioData *) -> bool;
 };
 
 #endif
