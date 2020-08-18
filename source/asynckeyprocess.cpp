@@ -21,14 +21,15 @@
 
 #include "asynckeyprocess.h"
 
-KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject& object) {
+KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject &object) {
   KeyFinderResultWrapper result;
   result.batchRow = object.batchRow;
 
-  AudioFileDecoder* decoder = NULL;
+  AudioFileDecoder *decoder = NULL;
   try {
-    decoder = new AudioFileDecoder(object.filePath, object.prefs.getMaxDuration());
-  } catch (std::exception& e) {
+    decoder =
+        new AudioFileDecoder(object.filePath, object.prefs.getMaxDuration());
+  } catch (std::exception &e) {
     delete decoder;
     result.errorMessage = QString(e.what());
     return result;
@@ -44,8 +45,9 @@ KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject& object) {
 
   try {
     while (true) {
-      KeyFinder::AudioData* tempAudio = decoder->decodeNextAudioPacket();
-      if (tempAudio == NULL) break;
+      KeyFinder::AudioData *tempAudio = decoder->decodeNextAudioPacket();
+      if (tempAudio == NULL)
+        break;
 
       kf.progressiveChromagram(*tempAudio, workspace);
       delete tempAudio;
@@ -58,8 +60,9 @@ KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject& object) {
     result.fullChromagram = KeyFinder::Chromagram(*workspace.chromagram);
     result.core = kf.keyOfChromagram(workspace);
 
-  } catch (std::exception& e) {
-    if (decoder != NULL) delete decoder;
+  } catch (std::exception &e) {
+    if (decoder != NULL)
+      delete decoder;
     result.errorMessage = QString(e.what());
     return result;
   } catch (...) {

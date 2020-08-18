@@ -20,38 +20,47 @@
 *************************************************************************/
 
 #include <QApplication>
-#include <QMenuBar>
 #include <QKeySequence>
+#include <QMenuBar>
 
+#include "asynckeyresult.h"
+#include "decoderlibav.h"
 #include "guibatch.h"
 #include "guimenuhandler.h"
-#include "decoderlibav.h"
-#include "asynckeyresult.h"
 
 #include <fstream>
 
-void LoggingHandler(QtMsgType type, const QMessageLogContext& /*context*/, const QString &msg) {
+void LoggingHandler(QtMsgType type, const QMessageLogContext & /*context*/,
+                    const QString &msg) {
   std::ofstream logfile;
 #if defined Q_OS_MAC
-  logfile.open(QDir::homePath().toUtf8() + "/Library/Logs/KeyFinder.log", std::ios::app);
+  logfile.open(QDir::homePath().toUtf8() + "/Library/Logs/KeyFinder.log",
+               std::ios::app);
 #elif defined Q_OS_LINUX
   logfile.open("KeyFinder.log", std::ios::app);
 #else
   logfile.open("KeyFinder_log.txt", std::ios::app);
 #endif
-  logfile << QDate::currentDate().toString("yyyy-MM-dd").toUtf8().constData() << " ";
-  logfile << QTime::currentTime().toString("hh:mm:ss.zzz").toUtf8().constData() << " ";
+  logfile << QDate::currentDate().toString("yyyy-MM-dd").toUtf8().constData()
+          << " ";
+  logfile << QTime::currentTime().toString("hh:mm:ss.zzz").toUtf8().constData()
+          << " ";
   switch (type) {
   case QtInfoMsg:
-    logfile << "Info";     break;
+    logfile << "Info";
+    break;
   case QtDebugMsg:
-    logfile << "Debug";    break;
+    logfile << "Debug";
+    break;
   case QtWarningMsg:
-    logfile << "Warning";  break;
+    logfile << "Warning";
+    break;
   case QtCriticalMsg:
-    logfile << "Critical"; break;
+    logfile << "Critical";
+    break;
   case QtFatalMsg:
-    logfile << "Fatal";    break;
+    logfile << "Fatal";
+    break;
   }
   logfile << ": " << msg.toUtf8().constData() << "\n";
   logfile.close();
@@ -60,12 +69,12 @@ void LoggingHandler(QtMsgType type, const QMessageLogContext& /*context*/, const
   }
 }
 
-int commandLineInterface(int argc, char* argv[]) {
+int commandLineInterface(int argc, char *argv[]) {
   QString filePath = "";
   bool writeToTags = false;
 
   for (int i = 1; i < argc; i++) {
-    if (std::strcmp(argv[i], "-f") == 0 && i+1 < argc)
+    if (std::strcmp(argv[i], "-f") == 0 && i + 1 < argc)
       filePath = argv[++i];
     else if (std::strcmp(argv[i], "-w") == 0)
       writeToTags = true;
@@ -85,12 +94,13 @@ int commandLineInterface(int argc, char* argv[]) {
 
   if (writeToTags) {
     AVFileMetadataFactory factory;
-    AVFileMetadata* md = factory.createAVFileMetadata(filePath);
+    AVFileMetadata *md = factory.createAVFileMetadata(filePath);
     MetadataWriteResult written = md->writeKeyToMetadata(result.core, prefs);
     delete md;
     bool found = false;
     for (int i = 0; i < written.newTags.size(); i++)
-      if (!written.newTags[i].isEmpty()) found = true;
+      if (!written.newTags[i].isEmpty())
+        found = true;
     if (!found) {
       std::cerr << "Could not write to tags" << std::endl;
       return 2;
@@ -100,7 +110,7 @@ int commandLineInterface(int argc, char* argv[]) {
   return 0;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   QCoreApplication::setOrganizationName("Ibrahim Sha'ath");
   QCoreApplication::setOrganizationDomain("ibrahimshaath.co.uk");
   QCoreApplication::setApplicationName(GuiStrings::getInstance()->appName());
@@ -112,7 +122,7 @@ int main(int argc, char* argv[]) {
 
   // primitive command line use
   if (argc > 2) {
-    int cliResult = commandLineInterface(argc,argv);
+    int cliResult = commandLineInterface(argc, argv);
     if (cliResult >= 0)
       return cliResult;
   }
@@ -125,26 +135,30 @@ int main(int argc, char* argv[]) {
 #if defined Q_OS_MAC
   QString localeId = QLocale::system().name();
   QString languageId = QLocale::system().uiLanguages().first();
-  localeId.replace(QRegExp("[a-z]+_"), QString(languageId +"_"));
+  localeId.replace(QRegExp("[a-z]+_"), QString(languageId + "_"));
   QLocale myMacLocale(localeId);
   QDir dir(QApplication::applicationDirPath());
   dir.cdUp();
-  QString appTranslationPath = appTranslationPathBase.arg(dir.absolutePath()).arg(myMacLocale.name());
+  QString appTranslationPath =
+      appTranslationPathBase.arg(dir.absolutePath()).arg(myMacLocale.name());
   QString qtTranslationName = "qt_" + myMacLocale.name();
 #else
-  QString appTranslationPath = appTranslationPathBase.arg(QCoreApplication::applicationDirPath()).arg(QLocale::system().name());
+  QString appTranslationPath =
+      appTranslationPathBase.arg(QCoreApplication::applicationDirPath())
+          .arg(QLocale::system().name());
   QString qtTranslationName = "qt_" + QLocale::system().name();
 #endif
 
   QTranslator qtTranslator;
-  qtTranslator.load(qtTranslationName, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+  qtTranslator.load(qtTranslationName,
+                    QLibraryInfo::location(QLibraryInfo::TranslationsPath));
   a.installTranslator(&qtTranslator);
 
   QTranslator myappTranslator;
   myappTranslator.load(appTranslationPath);
   a.installTranslator(&myappTranslator);
 
-  MainMenuHandler* menuHandler = new MainMenuHandler(0);
+  MainMenuHandler *menuHandler = new MainMenuHandler(0);
   menuHandler->newBatchWindow(true);
 
   return a.exec();
