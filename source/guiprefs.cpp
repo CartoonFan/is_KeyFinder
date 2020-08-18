@@ -23,7 +23,6 @@
 #include "ui_prefsdialog.h"
 
 PrefsDialog::PrefsDialog(QWidget *parent): QDialog(parent),ui(new Ui::PrefsDialog) {
-
   // map dropdown values to indices
   listMetadataWrite << METADATA_WRITE_NONE;
   listMetadataWrite << METADATA_WRITE_PREPEND;

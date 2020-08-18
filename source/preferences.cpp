@@ -128,7 +128,6 @@ bool Preferences::equivalentTo(const Preferences& that) const {
 }
 
 void Preferences::load() {
-
   // ========================== Custom Key Codes ===============================
 
   settings->beginGroup("customKeyCodes");
@@ -213,11 +212,9 @@ void Preferences::load() {
   batchWindowGeometry = settings->value("batchWindowGeometry", QByteArray()).toByteArray();
   batchWindowSplitterState = settings->value("batchWindowSplitterState", QByteArray()).toByteArray();
   settings->endGroup();
-
 }
 
 void Preferences::save() {
-
   settings->beginGroup("customKeyCodes");
   settings->setValue("A",    customKeyCodes[0]);   settings->setValue("Am",  customKeyCodes[1]);
   settings->setValue("Bb",   customKeyCodes[2]);   settings->setValue("Bbm", customKeyCodes[3]);
@@ -266,7 +263,6 @@ void Preferences::save() {
   settings->setValue("batchWindowGeometry", batchWindowGeometry);
   settings->setValue("batchWindowSplitterState", batchWindowSplitterState);
   settings->endGroup();
-
 }
 
 bool              Preferences::getWriteToFilesAutomatically() const { return writeToFilesAutomatically; }

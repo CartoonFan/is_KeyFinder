@@ -61,7 +61,6 @@ void LoggingHandler(QtMsgType type, const QMessageLogContext& /*context*/, const
 }
 
 int commandLineInterface(int argc, char* argv[]) {
-
   QString filePath = "";
   bool writeToTags = false;
 
@@ -99,11 +98,9 @@ int commandLineInterface(int argc, char* argv[]) {
   }
 
   return 0;
-
 }
 
 int main(int argc, char* argv[]) {
-
   QCoreApplication::setOrganizationName("Ibrahim Sha'ath");
   QCoreApplication::setOrganizationDomain("ibrahimshaath.co.uk");
   QCoreApplication::setApplicationName(GuiStrings::getInstance()->appName());

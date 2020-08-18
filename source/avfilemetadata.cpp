@@ -95,22 +95,18 @@ QString AVFileMetadata::getKey() const {
 }
 
 MetadataWriteResult AVFileMetadata::writeKeyToMetadata(KeyFinder::key_t key, const Preferences& prefs) {
-
     MetadataWriteResult result;
     QString data = prefs.getKeyCode(key);
     QString empty;
 
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
-
         result.newTags.push_back(empty);
 
         if ((metadata_tag_t)i == METADATA_TAG_KEY) {
-
             // Key field in ID3 holds only 3 chars; treat all Key fields as the same
             writeKeyByTagEnum(data.left(METADATA_CHARLIMIT_KEY), (metadata_tag_t)i, result, prefs);
 
         } else {
-
             writeKeyByTagEnum(data, (metadata_tag_t)i, result, prefs);
         }
     }
@@ -118,7 +114,6 @@ MetadataWriteResult AVFileMetadata::writeKeyToMetadata(KeyFinder::key_t key, con
 }
 
 void AVFileMetadata::writeKeyByTagEnum(const QString& data, metadata_tag_t tag, MetadataWriteResult& result, const Preferences& prefs) {
-
     // Key field in ID3 holds only 3 chars; treat all Key fields as the same
     unsigned int charLimit = (tag == METADATA_TAG_KEY ? METADATA_CHARLIMIT_KEY : METADATA_CHARLIMIT_OTHERS);
     QString newString = prefs.newString(data, getByTagEnum(tag), charLimit, prefs.getMetadataWriteByTagEnum(tag));
@@ -220,12 +215,10 @@ bool NullFileMetadata::setComment(const QString& /*cmt*/) {
 QString FlacFileMetadata::getComment() const {
     // TagLib's default behaviour treats Description as Comment
     if (flacFile->xiphComment()->contains(keyXiphTagComment)) {
-
         TagLib::String out = flacFile->xiphComment()->fieldListMap()[keyXiphTagComment].toString();
         return QString::fromUtf8((out.toCString(true)));
 
     } else {
-
         return emptyString;
     }
 }

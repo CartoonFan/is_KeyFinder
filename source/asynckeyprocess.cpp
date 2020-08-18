@@ -22,23 +22,17 @@
 #include "asynckeyprocess.h"
 
 KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject& object) {
-
   KeyFinderResultWrapper result;
   result.batchRow = object.batchRow;
 
   AudioFileDecoder* decoder = NULL;
   try {
-
     decoder = new AudioFileDecoder(object.filePath, object.prefs.getMaxDuration());
-
   } catch (std::exception& e) {
-
     delete decoder;
     result.errorMessage = QString(e.what());
     return result;
-
   } catch (...) {
-
     delete decoder;
     result.errorMessage = "Unknown exception initialising decoder";
     return result;
@@ -49,9 +43,7 @@ KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject& object) {
   static KeyFinder::KeyFinder kf;
 
   try {
-
     while (true) {
-
       KeyFinder::AudioData* tempAudio = decoder->decodeNextAudioPacket();
       if (tempAudio == NULL) break;
 
@@ -67,13 +59,10 @@ KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject& object) {
     result.core = kf.keyOfChromagram(workspace);
 
   } catch (std::exception& e) {
-
     if (decoder != NULL) delete decoder;
     result.errorMessage = QString(e.what());
     return result;
-
   } catch (...) {
-
     if (decoder != NULL) {
       delete decoder;
       result.errorMessage = "Unknown exception while decoding";

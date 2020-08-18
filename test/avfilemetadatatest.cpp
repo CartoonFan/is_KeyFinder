@@ -30,7 +30,6 @@ void testPathReturnsValues(
         const QString& expectedGrouping,
         const QString& expectedKey
         ) {
-
     AVFileMetadataFactory factory;
     AVFileMetadata* fileMetadata = factory.createAVFileMetadata(path);
 
@@ -242,7 +241,6 @@ TEST (AVFileMetadataTest, ReadWma) {
 }
 
 TEST (AVFileMetadataTest, WriteMissing) {
-
     Preferences prefs;
     AVFileMetadataFactory factory;
     AVFileMetadata* fileMetadata = factory.createAVFileMetadata("noFileHere");

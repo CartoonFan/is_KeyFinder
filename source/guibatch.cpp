@@ -222,14 +222,12 @@ void BatchWindow::setGuiRunning(const QString &msg, bool cancellable) {
 }
 
 void BatchWindow::readLibraryFinished() {
-
   libraryPlaylists = readLibraryWatcher->result();
 
   delete readLibraryWatcher;
   readLibraryWatcher = nullptr;
 
   for (auto &libraryPlaylist : libraryPlaylists) {
-
     int newRow = ui->libraryWidget->rowCount();
     ui->libraryWidget->insertRow(newRow);
     ui->libraryWidget->setItem(newRow, COL_PLAYLIST_NAME,
@@ -340,7 +338,6 @@ auto BatchWindow::receiveUrls(const QList<QUrl> &urls) -> bool {
 }
 
 void BatchWindow::addDroppedFiles() {
-
   // get a new preferences object in case they've changed since the last file
   // drop.
   prefs = Preferences();
@@ -350,7 +347,6 @@ void BatchWindow::addDroppedFiles() {
   QList<QFileInfo> symLinks;
 
   while (!droppedFiles.isEmpty()) {
-
     // check URL resolves to local file
     QString filePath = droppedFiles.first().toLocalFile();
     droppedFiles.removeFirst();
@@ -757,7 +753,6 @@ auto BatchWindow::writeToTagsAtRow(int row, KeyFinder::key_t key) -> bool {
 }
 
 auto BatchWindow::writeToFilenameAtRow(int row, KeyFinder::key_t key) -> bool {
-
   QString currentFilename = ui->tableWidget->item(row, COL_FILEPATH)->text();
   QStringList newFilename = writeKeyToFilename(currentFilename, key, prefs);
 
