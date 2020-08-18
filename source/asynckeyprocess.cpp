@@ -22,56 +22,56 @@
 #include "asynckeyprocess.h"
 
 KeyFinderResultWrapper keyDetectionProcess(const AsyncFileObject& object) {
-  KeyFinderResultWrapper result;
-  result.batchRow = object.batchRow;
+    KeyFinderResultWrapper result;
+    result.batchRow = object.batchRow;
 
-  AudioFileDecoder* decoder = NULL;
-  try {
-    decoder = new AudioFileDecoder(object.filePath, object.prefs.getMaxDuration());
-  } catch (std::exception& e) {
-    delete decoder;
-    result.errorMessage = QString(e.what());
-    return result;
-  } catch (...) {
-    delete decoder;
-    result.errorMessage = "Unknown exception initialising decoder";
-    return result;
-  }
-
-  KeyFinder::Workspace workspace;
-
-  static KeyFinder::KeyFinder kf;
-
-  try {
-    while (true) {
-      KeyFinder::AudioData* tempAudio = decoder->decodeNextAudioPacket();
-      if (tempAudio == NULL) break;
-
-      kf.progressiveChromagram(*tempAudio, workspace);
-      delete tempAudio;
+    AudioFileDecoder* decoder = NULL;
+    try {
+        decoder = new AudioFileDecoder(object.filePath, object.prefs.getMaxDuration());
+    } catch (std::exception& e) {
+        delete decoder;
+        result.errorMessage = QString(e.what());
+        return result;
+    } catch (...) {
+        delete decoder;
+        result.errorMessage = "Unknown exception initialising decoder";
+        return result;
     }
 
-    delete decoder;
-    decoder = NULL;
+    KeyFinder::Workspace workspace;
 
-    kf.finalChromagram(workspace);
-    result.fullChromagram = KeyFinder::Chromagram(*workspace.chromagram);
-    result.core = kf.keyOfChromagram(workspace);
+    static KeyFinder::KeyFinder kf;
 
-  } catch (std::exception& e) {
-    if (decoder != NULL) delete decoder;
-    result.errorMessage = QString(e.what());
-    return result;
-  } catch (...) {
-    if (decoder != NULL) {
-      delete decoder;
-      result.errorMessage = "Unknown exception while decoding";
-    } else {
-      result.errorMessage = "Unknown exception while analysing";
+    try {
+        while (true) {
+            KeyFinder::AudioData* tempAudio = decoder->decodeNextAudioPacket();
+            if (tempAudio == NULL) break;
+
+            kf.progressiveChromagram(*tempAudio, workspace);
+            delete tempAudio;
+        }
+
+        delete decoder;
+        decoder = NULL;
+
+        kf.finalChromagram(workspace);
+        result.fullChromagram = KeyFinder::Chromagram(*workspace.chromagram);
+        result.core = kf.keyOfChromagram(workspace);
+
+    } catch (std::exception& e) {
+        if (decoder != NULL) delete decoder;
+        result.errorMessage = QString(e.what());
+        return result;
+    } catch (...) {
+        if (decoder != NULL) {
+            delete decoder;
+            result.errorMessage = "Unknown exception while decoding";
+        } else {
+            result.errorMessage = "Unknown exception while analysing";
+        }
+
+        return result;
     }
 
     return result;
-  }
-
-  return result;
 }

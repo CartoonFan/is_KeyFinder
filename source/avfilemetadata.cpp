@@ -36,14 +36,28 @@ const char* keyAsfTagKey           = "WM/InitialKey";
 
 AVFileMetadata::AVFileMetadata(TagLib::FileRef* inFr, TagLib::File* f) : fr(inFr), genericFile(f) { }
 NullFileMetadata::NullFileMetadata      (TagLib::FileRef* fr, TagLib::File* g)                              : AVFileMetadata     (fr, g)       { }
-FlacFileMetadata::FlacFileMetadata      (TagLib::FileRef* fr, TagLib::File* g, TagLib::FLAC::File* s)       : AVFileMetadata     (fr, g)       { flacFile = s; }
-MpegID3FileMetadata::MpegID3FileMetadata(TagLib::FileRef* fr, TagLib::File* g, TagLib::MPEG::File* s)       : AVFileMetadata     (fr, g)       { mpegFile = s; }
-AiffID3FileMetadata::AiffID3FileMetadata(TagLib::FileRef* fr, TagLib::File* g, TagLib::RIFF::AIFF::File* s) : MpegID3FileMetadata(fr, g, NULL) { aiffFile = s; }
-WavID3FileMetadata::WavID3FileMetadata  (TagLib::FileRef* fr, TagLib::File* g, TagLib::RIFF::WAV::File* s)  : AiffID3FileMetadata(fr, g, NULL) { wavFile = s; }
-Mp4FileMetadata::Mp4FileMetadata        (TagLib::FileRef* fr, TagLib::File* g, TagLib::MP4::File* s)        : AVFileMetadata     (fr, g)       { mp4File = s; }
-AsfFileMetadata::AsfFileMetadata        (TagLib::FileRef* fr, TagLib::File* g, TagLib::ASF::File* s)        : AVFileMetadata     (fr, g)       { asfFile = s; }
+FlacFileMetadata::FlacFileMetadata      (TagLib::FileRef* fr, TagLib::File* g, TagLib::FLAC::File* s)       : AVFileMetadata     (fr, g)       {
+    flacFile = s;
+}
+MpegID3FileMetadata::MpegID3FileMetadata(TagLib::FileRef* fr, TagLib::File* g, TagLib::MPEG::File* s)       : AVFileMetadata     (fr, g)       {
+    mpegFile = s;
+}
+AiffID3FileMetadata::AiffID3FileMetadata(TagLib::FileRef* fr, TagLib::File* g, TagLib::RIFF::AIFF::File* s) : MpegID3FileMetadata(fr, g, NULL) {
+    aiffFile = s;
+}
+WavID3FileMetadata::WavID3FileMetadata  (TagLib::FileRef* fr, TagLib::File* g, TagLib::RIFF::WAV::File* s)  : AiffID3FileMetadata(fr, g, NULL) {
+    wavFile = s;
+}
+Mp4FileMetadata::Mp4FileMetadata        (TagLib::FileRef* fr, TagLib::File* g, TagLib::MP4::File* s)        : AVFileMetadata     (fr, g)       {
+    mp4File = s;
+}
+AsfFileMetadata::AsfFileMetadata        (TagLib::FileRef* fr, TagLib::File* g, TagLib::ASF::File* s)        : AVFileMetadata     (fr, g)       {
+    asfFile = s;
+}
 
-AVFileMetadata::~AVFileMetadata() { delete fr; }
+AVFileMetadata::~AVFileMetadata() {
+    delete fr;
+}
 NullFileMetadata::~NullFileMetadata() { }
 
 // ================================= GENERIC ===================================

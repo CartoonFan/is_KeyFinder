@@ -22,14 +22,14 @@
 #include "avfilemetadatatest.h"
 
 void testPathReturnsValues(
-        const QString& path,
-        const QString& expectedTitle,
-        const QString& expectedArtist,
-        const QString& expectedAlbum,
-        const QString& expectedComment,
-        const QString& expectedGrouping,
-        const QString& expectedKey
-        ) {
+    const QString& path,
+    const QString& expectedTitle,
+    const QString& expectedArtist,
+    const QString& expectedAlbum,
+    const QString& expectedComment,
+    const QString& expectedGrouping,
+    const QString& expectedKey
+) {
     AVFileMetadataFactory factory;
     AVFileMetadata* fileMetadata = factory.createAVFileMetadata(path);
 
@@ -124,120 +124,120 @@ void testId3WritingForMp3s(const QString& path, bool v1, bool v2, bool v2_3, boo
 
 TEST (AVFileMetadataTest, ReadMissing) {
     testPathReturnsValues(
-                "noFileHere",
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable()
-                );
+        "noFileHere",
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable()
+    );
 }
 
 TEST (AVFileMetadataTest, ReadNull) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/notAV.pdf",
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable()
-                );
+        "../is_KeyFinder/test-resources/notAV.pdf",
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable()
+    );
 }
 
 TEST (AVFileMetadataTest, ReadFlac) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/flac.flac",
-                "Title", "Artist", "Album", "Comment",
-                GuiStrings::getInstance()->notApplicable(),
-                "Key"
-                );
+        "../is_KeyFinder/test-resources/readTags/flac.flac",
+        "Title", "Artist", "Album", "Comment",
+        GuiStrings::getInstance()->notApplicable(),
+        "Key"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadMp3WithNoTags) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/mp3 with no tags.mp3",
-                "", "", "", "",
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable()
-                );
+        "../is_KeyFinder/test-resources/readTags/mp3 with no tags.mp3",
+        "", "", "", "",
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable()
+    );
 }
 
 TEST (AVFileMetadataTest, ReadMp3WithID3v1) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/mp3 with id3 v1.mp3",
-                "Title v1", "Artist v1", "Album v1", "Comment v1",
-                GuiStrings::getInstance()->notApplicable(),
-                GuiStrings::getInstance()->notApplicable()
-                );
+        "../is_KeyFinder/test-resources/readTags/mp3 with id3 v1.mp3",
+        "Title v1", "Artist v1", "Album v1", "Comment v1",
+        GuiStrings::getInstance()->notApplicable(),
+        GuiStrings::getInstance()->notApplicable()
+    );
 }
 
 TEST (AVFileMetadataTest, ReadMp3WithID3v2_3) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/mp3 with id3 v2.3.mp3",
-                "Title v2.3", "Artist v2.3", "Album v2.3",
-                "Comment v2.3", "Grouping v2.3", "2.3"
-                );
+        "../is_KeyFinder/test-resources/readTags/mp3 with id3 v2.3.mp3",
+        "Title v2.3", "Artist v2.3", "Album v2.3",
+        "Comment v2.3", "Grouping v2.3", "2.3"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadMp3WithID3v2_4) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/mp3 with id3 v2.4.mp3",
-                "Title v2.4", "Artist v2.4", "Album v2.4",
-                "Comment v2.4", "Grouping v2.4", "2.4"
-                );
+        "../is_KeyFinder/test-resources/readTags/mp3 with id3 v2.4.mp3",
+        "Title v2.4", "Artist v2.4", "Album v2.4",
+        "Comment v2.4", "Grouping v2.4", "2.4"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadMp3WithID3v1Andv2_3) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/mp3 with id3 v2.3 and v1.mp3",
-                "Title v2.3", "Artist v2.3", "Album v2.3",
-                "Comment v2.3", "Grouping v2.3", "2.3"
-                );
+        "../is_KeyFinder/test-resources/readTags/mp3 with id3 v2.3 and v1.mp3",
+        "Title v2.3", "Artist v2.3", "Album v2.3",
+        "Comment v2.3", "Grouping v2.3", "2.3"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadMp3WithID3v1Andv2_4) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/mp3 with id3 v2.4 and v1.mp3",
-                "Title v2.4", "Artist v2.4", "Album v2.4",
-                "Comment v2.4", "Grouping v2.4", "2.4"
-                );
+        "../is_KeyFinder/test-resources/readTags/mp3 with id3 v2.4 and v1.mp3",
+        "Title v2.4", "Artist v2.4", "Album v2.4",
+        "Comment v2.4", "Grouping v2.4", "2.4"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadAiff) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/aiff.aiff",
-                "Title", "Artist", "Album", "Comment", "Grouping", "Key"
-                );
+        "../is_KeyFinder/test-resources/readTags/aiff.aiff",
+        "Title", "Artist", "Album", "Comment", "Grouping", "Key"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadWav) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/wav.wav",
-                "Title", "Artist", "Album", "Comment", "Grouping", "Key"
-                );
+        "../is_KeyFinder/test-resources/readTags/wav.wav",
+        "Title", "Artist", "Album", "Comment", "Grouping", "Key"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadAlac) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/alac.m4a",
-                "Title", "Artist", "Album", "Comment", "Grouping", "Key"
-                );
+        "../is_KeyFinder/test-resources/readTags/alac.m4a",
+        "Title", "Artist", "Album", "Comment", "Grouping", "Key"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadAac) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/aac.m4a",
-                "Title", "Artist", "Album", "Comment", "Grouping", "Key"
-                );
+        "../is_KeyFinder/test-resources/readTags/aac.m4a",
+        "Title", "Artist", "Album", "Comment", "Grouping", "Key"
+    );
 }
 
 TEST (AVFileMetadataTest, ReadWma) {
     testPathReturnsValues(
-                "../is_KeyFinder/test-resources/readTags/wma.wma",
-                "Title", "Artist", "Album", "Comment", "Grouping", "Key"
-                );
+        "../is_KeyFinder/test-resources/readTags/wma.wma",
+        "Title", "Artist", "Album", "Comment", "Grouping", "Key"
+    );
 }
 
 TEST (AVFileMetadataTest, WriteMissing) {
@@ -274,88 +274,88 @@ TEST (AVFileMetadataTest, WriteFlac) {
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
         if ((metadata_tag_t)i == METADATA_TAG_GROUPING) continue;
         testWritingToFile(
-                    "../is_KeyFinder/test-resources/writeTags/flac.flac",
-                    (metadata_tag_t)i
-                    );
+            "../is_KeyFinder/test-resources/writeTags/flac.flac",
+            (metadata_tag_t)i
+        );
     }
 }
 
 TEST (AVFileMetadataTest, WriteMp3WithID3v1) {
     testId3WritingForMp3s(
-                "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v1.mp3",
-                true, false, false, false
-                );
+        "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v1.mp3",
+        true, false, false, false
+    );
 }
 
 TEST (AVFileMetadataTest, WriteMp3WithID3v2_3) {
     testId3WritingForMp3s(
-                "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v2.3.mp3",
-                false, true, true, false
-                );
+        "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v2.3.mp3",
+        false, true, true, false
+    );
 }
 
 TEST (AVFileMetadataTest, WriteMp3WithID3v2_4) {
     testId3WritingForMp3s(
-                "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v2.4.mp3",
-                false, true, false, true
-                );
+        "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v2.4.mp3",
+        false, true, false, true
+    );
 }
 
 TEST (AVFileMetadataTest, WriteMp3WithID3v1Andv2_3) {
     testId3WritingForMp3s(
-                "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v2.3 and v1.mp3",
-                true, true, true, false
-                );
+        "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v2.3 and v1.mp3",
+        true, true, true, false
+    );
 }
 
 TEST (AVFileMetadataTest, WriteMp3WithID3v1Andv2_4) {
     testId3WritingForMp3s(
-                "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v2.4 and v1.mp3",
-                true, true, false, true
-                );
+        "../is_KeyFinder/test-resources/writeTags/mp3 with id3 v2.4 and v1.mp3",
+        true, true, false, true
+    );
 }
 
 TEST (AVFileMetadataTest, WriteAiff) {
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
         testWritingToFile(
-                    "../is_KeyFinder/test-resources/writeTags/aiff.aiff",
-                    (metadata_tag_t)i
-                    );
+            "../is_KeyFinder/test-resources/writeTags/aiff.aiff",
+            (metadata_tag_t)i
+        );
     }
 }
 
 TEST (AVFileMetadataTest, WriteWav) {
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
         testWritingToFile(
-                    "../is_KeyFinder/test-resources/writeTags/wav.wav",
-                    (metadata_tag_t)i
-                    );
+            "../is_KeyFinder/test-resources/writeTags/wav.wav",
+            (metadata_tag_t)i
+        );
     }
 }
 
 TEST (AVFileMetadataTest, WriteAlac) {
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
         testWritingToFile(
-                    "../is_KeyFinder/test-resources/writeTags/alac.m4a",
-                    (metadata_tag_t)i
-                    );
+            "../is_KeyFinder/test-resources/writeTags/alac.m4a",
+            (metadata_tag_t)i
+        );
     }
 }
 
 TEST (AVFileMetadataTest, WriteAac) {
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
         testWritingToFile(
-                    "../is_KeyFinder/test-resources/writeTags/aac.m4a",
-                    (metadata_tag_t)i
-                    );
+            "../is_KeyFinder/test-resources/writeTags/aac.m4a",
+            (metadata_tag_t)i
+        );
     }
 }
 
 TEST (AVFileMetadataTest, WriteWma) {
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
         testWritingToFile(
-                    "../is_KeyFinder/test-resources/writeTags/wma.wma",
-                    (metadata_tag_t)i
-                    );
+            "../is_KeyFinder/test-resources/writeTags/wma.wma",
+            (metadata_tag_t)i
+        );
     }
 }
