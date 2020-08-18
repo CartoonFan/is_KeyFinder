@@ -492,3 +492,4 @@ QUrl ExternalPlaylistProvider::fixTraktorAddressing(const QString& address) {
   qDebug("Fixed Traktor address from %s to %s", address.toUtf8().constData(), addressCopy.toUtf8().constData());
   return QUrl::fromLocalFile(addressCopy);
 }
+ 
