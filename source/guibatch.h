@@ -25,33 +25,31 @@
 // forward declaration for circular dependency
 class MainMenuHandler;
 
-#include <QtCore>
-#include <QtConcurrent/QtConcurrent>
-#include <QtWidgets/QMainWindow>
-#include <QThread>
+#include <QClipboard>
 #include <QDragEnterEvent>
 #include <QDropEvent>
-#include <QUrl>
 #include <QFuture>
 #include <QFutureWatcher>
-#include <QClipboard>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QLabel>
+#include <QThread>
+#include <QUrl>
+#include <QtConcurrent/QtConcurrent>
+#include <QtCore>
 #include <QtNetwork/QNetworkReply>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMessageBox>
 
-#include "guimenuhandler.h"
-#include "preferences.h"
+#include "_VERSION.h"
 #include "asynckeyprocess.h"
 #include "asyncmetadatareadprocess.h"
-#include "metadatafilename.h"
 #include "externalplaylistprovider.h"
-#include "_VERSION.h"
+#include "guimenuhandler.h"
+#include "metadatafilename.h"
+#include "preferences.h"
 
-enum playlist_columns_t{
-  COL_PLAYLIST_NAME
-};
+enum playlist_columns_t { COL_PLAYLIST_NAME };
 
-enum track_columns_t{
+enum track_columns_t {
   COL_STATUS,
   COL_FILEPATH,
   COL_FILENAME,
@@ -65,16 +63,15 @@ enum track_columns_t{
 };
 
 namespace Ui {
-  class BatchWindow;
+class BatchWindow;
 }
 
 class BatchWindow : public QMainWindow {
   Q_OBJECT
 
 public:
-
-  explicit BatchWindow(QWidget* parent, MainMenuHandler* handler);
-  bool receiveUrls(const QList<QUrl>&);
+  explicit BatchWindow(QWidget *parent, MainMenuHandler *handler);
+  bool receiveUrls(const QList<QUrl> &);
   ~BatchWindow();
 
 public slots:
@@ -82,43 +79,42 @@ public slots:
   void checkForNewVersion();
 
 private:
-
-  void closeEvent(QCloseEvent*);
+  void closeEvent(QCloseEvent *);
   Preferences prefs;
   void setGuiDefaults();
-  void setGuiRunning(const QString&, bool);
+  void setGuiRunning(const QString &, bool);
 
   void sortTableWidget();
 
   int libraryOldIndex;
-  QFutureWatcher<QList<ExternalPlaylist> >* readLibraryWatcher;
-  QFutureWatcher<QList<QUrl> >* loadPlaylistWatcher;
+  QFutureWatcher<QList<ExternalPlaylist>> *readLibraryWatcher;
+  QFutureWatcher<QList<QUrl>> *loadPlaylistWatcher;
   QList<ExternalPlaylist> libraryPlaylists;
 
-  void dragEnterEvent(QDragEnterEvent*);
-  void dropEvent(QDropEvent*);
+  void dragEnterEvent(QDragEnterEvent *);
+  void dropEvent(QDropEvent *);
   QList<QUrl> droppedFiles;
   void addDroppedFiles();
-  QFutureWatcher<void>* addFilesWatcher;
-  QList<QUrl> getDirectoryContents(const QDir&) const;
+  QFutureWatcher<void> *addFilesWatcher;
+  QList<QUrl> getDirectoryContents(const QDir &) const;
 
-  void addNewRow(const QString&);
-  QFutureWatcher<MetadataReadResult>* metadataReadWatcher;
+  void addNewRow(const QString &);
+  QFutureWatcher<MetadataReadResult> *metadataReadWatcher;
   void readMetadata();
 
-  QFutureWatcher<KeyFinderResultWrapper>* analysisWatcher;
+  QFutureWatcher<KeyFinderResultWrapper> *analysisWatcher;
   void checkRowsForSkipping();
   bool fieldAlreadyHasKeyData(int, int, metadata_write_t);
-  void markRowSkipped(int,bool);
+  void markRowSkipped(int, bool);
   void runAnalysis();
 
   bool writeToTagsAtRow(int, KeyFinder::key_t);
   bool writeToFilenameAtRow(int, KeyFinder::key_t);
 
   // UI
-  Ui::BatchWindow* ui;
+  Ui::BatchWindow *ui;
   QPointer<QLabel> initialHelpLabel;
-  MainMenuHandler* menuHandler;
+  MainMenuHandler *menuHandler;
   QBrush keyFinderRow;
   QBrush keyFinderAltRow;
   QBrush textDefault;
@@ -130,7 +126,7 @@ private:
 
 private slots:
 
-  void on_libraryWidget_cellClicked(int,int);
+  void on_libraryWidget_cellClicked(int, int);
   void headerClicked(int);
 
   void readLibraryFinished();
@@ -152,7 +148,7 @@ private slots:
   void progressRangeChanged(int, int);
   void progressValueChanged(int);
 
-  static void receiveNetworkReply(QNetworkReply*);
+  static void receiveNetworkReply(QNetworkReply *);
 };
 
 #endif
