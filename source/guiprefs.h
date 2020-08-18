@@ -22,26 +22,28 @@
 #ifndef PREFSDIALOG_H
 #define PREFSDIALOG_H
 
-#include <QtWidgets/QDialog>
 #include <QString>
+#include <QtWidgets/QDialog>
 #include <QtWidgets/QFileDialog>
 
 #include "preferences.h"
 
 namespace Ui {
-  class PrefsDialog;
+class PrefsDialog;
 }
 
 class PrefsDialog : public QDialog {
   Q_OBJECT
+
 public:
-  explicit PrefsDialog(QWidget* parent = 0);
+  explicit PrefsDialog(QWidget *parent = 0);
   ~PrefsDialog();
+
 private:
   // map combobox indices to useful values
-  QList<metadata_format_t>               listMetadataFormat;
-  QList<metadata_write_t>                listMetadataWrite;
-  QList<metadata_write_t>                listMetadataWriteKey;
+  QList<metadata_format_t> listMetadataFormat;
+  QList<metadata_write_t> listMetadataWrite;
+  QList<metadata_write_t> listMetadataWriteKey;
   // altering state on field changes
   void metadataDelimiterEnabled();
   void applyFileExtensionFilterEnabled();
@@ -59,6 +61,7 @@ private slots:
   void on_metadataWriteKey_currentIndexChanged(int index);
   void on_metadataWriteFilename_currentIndexChanged(int index);
   void on_applyFileExtensionFilter_stateChanged(int state);
+
 private:
   Ui::PrefsDialog *ui;
 };

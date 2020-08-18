@@ -22,8 +22,8 @@
 #include "guiprefs.h"
 #include "ui_prefsdialog.h"
 
-PrefsDialog::PrefsDialog(QWidget *parent): QDialog(parent),ui(new Ui::PrefsDialog) {
-
+PrefsDialog::PrefsDialog(QWidget *parent)
+    : QDialog(parent), ui(new Ui::PrefsDialog) {
   // map dropdown values to indices
   listMetadataWrite << METADATA_WRITE_NONE;
   listMetadataWrite << METADATA_WRITE_PREPEND;
@@ -47,14 +47,22 @@ PrefsDialog::PrefsDialog(QWidget *parent): QDialog(parent),ui(new Ui::PrefsDialo
   ui->applyFileExtensionFilter->setChecked(p.getApplyFileExtensionFilter());
   ui->maxDuration->setValue(p.getMaxDuration());
 
-  ui->tagFormat->setCurrentIndex(listMetadataFormat.indexOf(p.getMetadataFormat()));
-  ui->metadataWriteTitle->setCurrentIndex(listMetadataWrite.indexOf(p.getMetadataWriteTitle()));
-  ui->metadataWriteArtist->setCurrentIndex(listMetadataWrite.indexOf(p.getMetadataWriteArtist()));
-  ui->metadataWriteAlbum->setCurrentIndex(listMetadataWrite.indexOf(p.getMetadataWriteAlbum()));
-  ui->metadataWriteComment->setCurrentIndex(listMetadataWrite.indexOf(p.getMetadataWriteComment()));
-  ui->metadataWriteGrouping->setCurrentIndex(listMetadataWrite.indexOf(p.getMetadataWriteGrouping()));
-  ui->metadataWriteKey->setCurrentIndex(listMetadataWriteKey.indexOf(p.getMetadataWriteKey()));
-  ui->metadataWriteFilename->setCurrentIndex(listMetadataWrite.indexOf(p.getMetadataWriteFilename()));
+  ui->tagFormat->setCurrentIndex(
+      listMetadataFormat.indexOf(p.getMetadataFormat()));
+  ui->metadataWriteTitle->setCurrentIndex(
+      listMetadataWrite.indexOf(p.getMetadataWriteTitle()));
+  ui->metadataWriteArtist->setCurrentIndex(
+      listMetadataWrite.indexOf(p.getMetadataWriteArtist()));
+  ui->metadataWriteAlbum->setCurrentIndex(
+      listMetadataWrite.indexOf(p.getMetadataWriteAlbum()));
+  ui->metadataWriteComment->setCurrentIndex(
+      listMetadataWrite.indexOf(p.getMetadataWriteComment()));
+  ui->metadataWriteGrouping->setCurrentIndex(
+      listMetadataWrite.indexOf(p.getMetadataWriteGrouping()));
+  ui->metadataWriteKey->setCurrentIndex(
+      listMetadataWriteKey.indexOf(p.getMetadataWriteKey()));
+  ui->metadataWriteFilename->setCurrentIndex(
+      listMetadataWrite.indexOf(p.getMetadataWriteFilename()));
   ui->metadataDelimiter->setText(p.getMetadataDelimiter());
 
   ui->iTunesLibraryPath->setText(p.getITunesLibraryPath());
@@ -62,18 +70,30 @@ PrefsDialog::PrefsDialog(QWidget *parent): QDialog(parent),ui(new Ui::PrefsDialo
   ui->seratoLibraryPath->setText(p.getSeratoLibraryPath());
 
   QStringList ckc = p.getCustomKeyCodes();
-  ui->majKey0->setText(ckc[0]);   ui->minKey0->setText(ckc[1]);
-  ui->majKey1->setText(ckc[2]);   ui->minKey1->setText(ckc[3]);
-  ui->majKey2->setText(ckc[4]);   ui->minKey2->setText(ckc[5]);
-  ui->majKey3->setText(ckc[6]);   ui->minKey3->setText(ckc[7]);
-  ui->majKey4->setText(ckc[8]);   ui->minKey4->setText(ckc[9]);
-  ui->majKey5->setText(ckc[10]);  ui->minKey5->setText(ckc[11]);
-  ui->majKey6->setText(ckc[12]);  ui->minKey6->setText(ckc[13]);
-  ui->majKey7->setText(ckc[14]);  ui->minKey7->setText(ckc[15]);
-  ui->majKey8->setText(ckc[16]);  ui->minKey8->setText(ckc[17]);
-  ui->majKey9->setText(ckc[18]);  ui->minKey9->setText(ckc[19]);
-  ui->majKey10->setText(ckc[20]); ui->minKey10->setText(ckc[21]);
-  ui->majKey11->setText(ckc[22]); ui->minKey11->setText(ckc[23]);
+  ui->majKey0->setText(ckc[0]);
+  ui->minKey0->setText(ckc[1]);
+  ui->majKey1->setText(ckc[2]);
+  ui->minKey1->setText(ckc[3]);
+  ui->majKey2->setText(ckc[4]);
+  ui->minKey2->setText(ckc[5]);
+  ui->majKey3->setText(ckc[6]);
+  ui->minKey3->setText(ckc[7]);
+  ui->majKey4->setText(ckc[8]);
+  ui->minKey4->setText(ckc[9]);
+  ui->majKey5->setText(ckc[10]);
+  ui->minKey5->setText(ckc[11]);
+  ui->majKey6->setText(ckc[12]);
+  ui->minKey6->setText(ckc[13]);
+  ui->majKey7->setText(ckc[14]);
+  ui->minKey7->setText(ckc[15]);
+  ui->majKey8->setText(ckc[16]);
+  ui->minKey8->setText(ckc[17]);
+  ui->majKey9->setText(ckc[18]);
+  ui->minKey9->setText(ckc[19]);
+  ui->majKey10->setText(ckc[20]);
+  ui->minKey10->setText(ckc[21]);
+  ui->majKey11->setText(ckc[22]);
+  ui->minKey11->setText(ckc[23]);
   ui->silence->setText(ckc[24]);
 
   ui->filterFileExtensions->setText(p.getFilterFileExtensions().join(","));
@@ -82,12 +102,13 @@ PrefsDialog::PrefsDialog(QWidget *parent): QDialog(parent),ui(new Ui::PrefsDialo
   metadataDelimiterEnabled();
   applyFileExtensionFilterEnabled();
 
-  //relative sizing on Mac/Linux only
+  // relative sizing on Mac/Linux only
 #ifndef Q_OS_WIN
   QFont smallerFont;
   smallerFont.setPointSize(smallerFont.pointSize() - 2);
-  for (int i=0; i<ui->gridLayoutKeyCodes->count(); i++) {
-    if (!ui->gridLayoutKeyCodes->itemAt(i)->isEmpty() && ui->gridLayoutKeyCodes->itemAt(i)->widget()->inherits("QLabel")) {
+  for (int i = 0; i < ui->gridLayoutKeyCodes->count(); i++) {
+    if (!ui->gridLayoutKeyCodes->itemAt(i)->isEmpty() &&
+        ui->gridLayoutKeyCodes->itemAt(i)->widget()->inherits("QLabel")) {
       ui->gridLayoutKeyCodes->itemAt(i)->widget()->setFont(smallerFont);
     }
   }
@@ -99,9 +120,7 @@ PrefsDialog::PrefsDialog(QWidget *parent): QDialog(parent),ui(new Ui::PrefsDialo
   ui->filterFileExtensions->setValidator(validator);
 }
 
-PrefsDialog::~PrefsDialog() {
-  delete ui;
-}
+PrefsDialog::~PrefsDialog() { delete ui; }
 
 void PrefsDialog::on_savePrefsButton_clicked() {
   Preferences p;
@@ -109,13 +128,20 @@ void PrefsDialog::on_savePrefsButton_clicked() {
   p.setParallelBatchJobs(ui->parallelBatchJobs->isChecked());
   p.setApplyFileExtensionFilter(ui->applyFileExtensionFilter->isChecked());
   p.setMetadataFormat(listMetadataFormat[ui->tagFormat->currentIndex()]);
-  p.setMetadataWriteTitle(listMetadataWrite[ui->metadataWriteTitle->currentIndex()]);
-  p.setMetadataWriteArtist(listMetadataWrite[ui->metadataWriteArtist->currentIndex()]);
-  p.setMetadataWriteAlbum(listMetadataWrite[ui->metadataWriteAlbum->currentIndex()]);
-  p.setMetadataWriteComment(listMetadataWrite[ui->metadataWriteComment->currentIndex()]);
-  p.setMetadataWriteGrouping(listMetadataWrite[ui->metadataWriteGrouping->currentIndex()]);
-  p.setMetadataWriteKey(listMetadataWriteKey[ui->metadataWriteKey->currentIndex()]);
-  p.setMetadataWriteFilename(listMetadataWrite[ui->metadataWriteFilename->currentIndex()]);
+  p.setMetadataWriteTitle(
+      listMetadataWrite[ui->metadataWriteTitle->currentIndex()]);
+  p.setMetadataWriteArtist(
+      listMetadataWrite[ui->metadataWriteArtist->currentIndex()]);
+  p.setMetadataWriteAlbum(
+      listMetadataWrite[ui->metadataWriteAlbum->currentIndex()]);
+  p.setMetadataWriteComment(
+      listMetadataWrite[ui->metadataWriteComment->currentIndex()]);
+  p.setMetadataWriteGrouping(
+      listMetadataWrite[ui->metadataWriteGrouping->currentIndex()]);
+  p.setMetadataWriteKey(
+      listMetadataWriteKey[ui->metadataWriteKey->currentIndex()]);
+  p.setMetadataWriteFilename(
+      listMetadataWrite[ui->metadataWriteFilename->currentIndex()]);
   p.setMetadataDelimiter(ui->metadataDelimiter->text());
   p.setSkipFilesWithExistingTags(ui->skipFilesWithExistingTags->isChecked());
   p.setMaxDuration(ui->maxDuration->value());
@@ -146,9 +172,7 @@ void PrefsDialog::on_savePrefsButton_clicked() {
   this->close();
 }
 
-void PrefsDialog::on_cancelButton_clicked() {
-  this->close();
-}
+void PrefsDialog::on_cancelButton_clicked() { this->close(); }
 
 void PrefsDialog::metadataDelimiterEnabled() {
   QList<int> indices;
@@ -169,7 +193,8 @@ void PrefsDialog::metadataDelimiterEnabled() {
 }
 
 void PrefsDialog::applyFileExtensionFilterEnabled() {
-  ui->filterFileExtensions->setEnabled(ui->applyFileExtensionFilter->isChecked());
+  ui->filterFileExtensions->setEnabled(
+      ui->applyFileExtensionFilter->isChecked());
 }
 
 void PrefsDialog::on_metadataWriteTitle_currentIndexChanged(int /*index*/) {
@@ -213,13 +238,11 @@ void PrefsDialog::on_findITunesLibraryButton_clicked() {
 #endif
   //: File browse dialog launched from the Preferences window
   QString iTunesLibraryPath = QFileDialog::getOpenFileName(
-                                this,
-                                //: Title of file browse dialog launched from the Preferences window
-                                tr("Choose iTunes Library XML"),
-                                initDir,
-                                //: Filetype in file browse dialog launched from the Preferences window
-                                tr("iTunes XML (*.xml)")
-                                );
+      this,
+      //: Title of file browse dialog launched from the Preferences window
+      tr("Choose iTunes Library XML"), initDir,
+      //: Filetype in file browse dialog launched from the Preferences window
+      tr("iTunes XML (*.xml)"));
   if (iTunesLibraryPath.isEmpty()) {
     return;
   }
@@ -234,13 +257,11 @@ void PrefsDialog::on_findTraktorLibraryButton_clicked() {
   initDir = QDir::homePath() + "/Documents/Native Instruments/Traktor 2.1.2";
 #endif
   QString traktorLibraryPath = QFileDialog::getOpenFileName(
-                                 this,
-                                 //: Title of file browse dialog launched from the Preferences window
-                                 tr("Choose Traktor Library NML"),
-                                 initDir,
-                                 //: Filetype in file browse dialog launched from the Preferences window
-                                 tr("Traktor NML (*.nml)")
-                                 );
+      this,
+      //: Title of file browse dialog launched from the Preferences window
+      tr("Choose Traktor Library NML"), initDir,
+      //: Filetype in file browse dialog launched from the Preferences window
+      tr("Traktor NML (*.nml)"));
   if (traktorLibraryPath.isEmpty()) {
     return;
   }
@@ -255,13 +276,11 @@ void PrefsDialog::on_findSeratoLibraryButton_clicked() {
   initDir = QDir::homePath() + "/Music/_Serato_";
 #endif
   QString seratoLibraryPath = QFileDialog::getOpenFileName(
-                                this,
-                                //: Title of file browse dialog launched from the Preferences window
-                                tr("Choose Serato database"),
-                                initDir,
-                                //: Filetype in file browse dialog launched from the Preferences window
-                                tr("Serato database (*)")
-                                );
+      this,
+      //: Title of file browse dialog launched from the Preferences window
+      tr("Choose Serato database"), initDir,
+      //: Filetype in file browse dialog launched from the Preferences window
+      tr("Serato database (*)"));
   if (seratoLibraryPath.isEmpty()) {
     return;
   }
