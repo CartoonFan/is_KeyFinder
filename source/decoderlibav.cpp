@@ -230,9 +230,7 @@ auto AudioFileDecoder::decodePacket(AVPacket *originalPacket,
     tempPacket.data += bytesConsumed;
     tempPacket.size -= bytesConsumed;
     if (dataSize <= 0) {
-      {
         continue; // nothing decoded
-      }
     }
     int newSamplesDecoded =
         dataSize / av_get_bytes_per_sample(cCtx->sample_fmt);
