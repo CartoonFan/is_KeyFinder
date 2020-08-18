@@ -482,7 +482,7 @@ void BatchWindow::addFilesFinished() {
 void BatchWindow::readMetadata() {
   prefs.setParallelBatchJobs(
       prefs.getParallelBatchJobs()); // This looks odd, but prefs sets the
-                                     // threadpool count.
+  // threadpool count.
   //: Text in the Batch window status bar
   setGuiRunning(tr("Reading tags..."), true);
   QList<AsyncFileObject> objects;
@@ -530,10 +530,10 @@ void BatchWindow::metadataReadFinished() {
 
 void BatchWindow::on_runBatchButton_clicked() {
   prefs = Preferences(); // Get a new preferences object in case they've changed
-                         // since the last run.
+  // since the last run.
   prefs.setParallelBatchJobs(
       prefs.getParallelBatchJobs()); // This looks odd, but prefs sets the
-                                     // threadpool count.
+  // threadpool count.
   checkRowsForSkipping();
   //: Text in the Batch window status bar
   setGuiRunning(tr("Analysing (%n thread(s))...", "",
@@ -683,7 +683,7 @@ void BatchWindow::analysisResultReadyAt(int index) {
   } else {
     ui->tableWidget->item(row, COL_STATUS)->setText(STATUS_FAILED);
     //: Status of an individual file in the Batch window; includes an exception
-    //message at %1
+    // message at %1
     ui->tableWidget->item(row, COL_DETECTED_KEY)
         ->setText(tr("Exception: %1").arg(error));
     ui->tableWidget->item(row, COL_DETECTED_KEY)->setForeground(textError);
@@ -708,7 +708,7 @@ void BatchWindow::writeDetectedToFiles() {
   //: Text in the Batch window status bar
   setGuiRunning(tr("Writing to files..."), false);
   prefs = Preferences(); // get a new preferences object in case they've changed
-                         // since the last run.
+  // since the last run.
   // which files to write to?
   int successfullyWrittenToTags = 0;
   int successfullyWrittenToFilename = 0;
@@ -734,7 +734,7 @@ void BatchWindow::writeDetectedToFiles() {
   }
   QMessageBox msg;
   //: An alert message in the Batch window; contains "N tags" at %1 and "N
-  //filenames" at %2
+  // filenames" at %2
   msg.setText(
       tr("Data written to %1 and %2")
           //: Part of an alert message in the Batch window
@@ -971,7 +971,7 @@ void BatchWindow::receiveNetworkReply(QNetworkReply *reply) {
   if (!newVersion.isEmpty()) {
     qDebug("Version check: new version available");
     //: An alert message in the Batch window; includes a version number at %1, a
-    //URL at %2, and the app name at %3
+    // URL at %2, and the app name at %3
     newVersion = tr("A new version, %1, is available on <a href='%2'>the %3 "
                     "website</a>!")
                      .arg(newVersion)
