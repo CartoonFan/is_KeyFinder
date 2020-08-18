@@ -57,19 +57,13 @@ BatchWindow::BatchWindow(QWidget *parent, MainMenuHandler *handler)
   ui->splitter->setCollapsible(0, true);
   ui->splitter->setCollapsible(1, false);
   if (prefs.getBatchWindowState() != QByteArray()) {
-    {
-      { this->restoreState(prefs.getBatchWindowState()); }
-    }
+    this->restoreState(prefs.getBatchWindowState());
   }
   if (prefs.getBatchWindowGeometry() != QByteArray()) {
-    {
-      { this->restoreGeometry(prefs.getBatchWindowGeometry()); }
-    }
+    this->restoreGeometry(prefs.getBatchWindowGeometry());
   }
   if (prefs.getBatchWindowSplitterState() != QByteArray()) {
-    {
-      { ui->splitter->restoreState(prefs.getBatchWindowSplitterState()); }
-    }
+    ui->splitter->restoreState(prefs.getBatchWindowSplitterState());
   }
   keyFinderRow = QBrush(QColor(191, 255, 191));
   keyFinderAltRow = QBrush(QColor(127, 223, 127));
@@ -488,12 +482,8 @@ void BatchWindow::readMetadata() {
   QList<AsyncFileObject> objects;
   for (int row = 0; row < ui->tableWidget->rowCount(); row++) {
     if (ui->tableWidget->item(row, COL_STATUS)->text() == STATUS_NEW) {
-      {
-        {
-          objects.push_back(AsyncFileObject(
-              ui->tableWidget->item(row, COL_FILEPATH)->text(), prefs, row));
-        }
-      }
+      objects.push_back(AsyncFileObject(
+          ui->tableWidget->item(row, COL_FILEPATH)->text(), prefs, row));
     }
   }
   QFuture<MetadataReadResult> metadataReadFuture =
@@ -549,9 +539,7 @@ void BatchWindow::checkRowsForSkipping() {
     QString status = ui->tableWidget->item(row, COL_STATUS)->text();
     if (status != STATUS_NEW && status != STATUS_TAGSREAD &&
         status != STATUS_SKIPPED) {
-      {
-        { continue; }
-      }
+      continue;
     }
     // if we're not skipping, don't skip
     if (!skippingFiles) {
@@ -564,12 +552,8 @@ void BatchWindow::checkRowsForSkipping() {
     bool skip = true;
     std::vector<metadata_write_t> writePrefs(METADATA_TAG_T_COUNT + 1);
     for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
-      {
-        {
-          writePrefs[i] =
-              prefs.getMetadataWriteByTagEnum(static_cast<metadata_tag_t>(i));
-        }
-      }
+      writePrefs[i] =
+          prefs.getMetadataWriteByTagEnum(static_cast<metadata_tag_t>(i));
     }
     writePrefs[METADATA_TAG_T_COUNT] = prefs.getMetadataWriteFilename();
 
@@ -804,22 +788,9 @@ void BatchWindow::clearDetected() {
         ui->tableWidget->item(row, COL_DETECTED_KEY)->setText("");
         // clear text colours
         for (int col = 0; col < ui->tableWidget->columnCount(); col++) {
-          {
-            {
-              if (!ui->tableWidget->isColumnHidden(col)) {
-                {
-                  {
-                    if (ui->tableWidget->item(row, col) != 0) {
-                      {
-                        {
-                          ui->tableWidget->item(row, col)->setForeground(
-                              textDefault);
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+          if (!ui->tableWidget->isColumnHidden(col)) {
+            if (ui->tableWidget->item(row, col) != 0) {
+              ui->tableWidget->item(row, col)->setForeground(textDefault);
             }
           }
         }
@@ -869,24 +840,16 @@ void BatchWindow::copySelectedFromTableWidget() {
     int chkRow = selectedIndex.row();
     int chkCol = selectedIndex.column();
     if (chkRow < firstRow) {
-      {
-        firstRow = chkRow;
-      }
+      firstRow = chkRow;
     }
     if (chkRow > lastRow) {
-      {
-        lastRow = chkRow;
-      }
+      lastRow = chkRow;
     }
     if (chkCol < firstCol) {
-      {
-        firstCol = chkCol;
-      }
+      firstCol = chkCol;
     }
     if (chkCol > lastCol) {
-      {
-        lastCol = chkCol;
-      }
+      lastCol = chkCol;
     }
   }
   for (int r = firstRow; r <= lastRow; r++) {
