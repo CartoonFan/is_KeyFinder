@@ -54,7 +54,8 @@ void testWritingToFile(const QString &path, metadata_tag_t tag) {
   AVFileMetadata *initFileMetadata = factory.createAVFileMetadata(path);
 
   for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
-    QString chk = initFileMetadata->getByTagEnum(static_cast<metadata_tag_t>(i));
+    QString chk =
+        initFileMetadata->getByTagEnum(static_cast<metadata_tag_t>(i));
     ASSERT_TRUE(chk == initValue || chk == noValue);
   }
   delete initFileMetadata;
@@ -63,7 +64,7 @@ void testWritingToFile(const QString &path, metadata_tag_t tag) {
   AVFileMetadata *setFileMetadata = factory.createAVFileMetadata(path);
   for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
     result.newTags.push_back(empty);
-}
+  }
 
   setFileMetadata->writeKeyByTagEnum(newValue, tag, result, prefs);
   for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
@@ -71,7 +72,7 @@ void testWritingToFile(const QString &path, metadata_tag_t tag) {
       ASSERT_TRUE(result.newTags[i] == newValue);
     } else {
       ASSERT_TRUE(result.newTags[i] == empty);
-}
+    }
   }
   ASSERT_TRUE(setFileMetadata->getByTagEnum(tag) == newValue);
   delete setFileMetadata;
@@ -81,7 +82,7 @@ void testWritingToFile(const QString &path, metadata_tag_t tag) {
   result.newTags.clear();
   for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
     result.newTags.push_back(empty);
-}
+  }
 
   resetFileMetadata->writeKeyByTagEnum(initValue, tag, result, prefs);
   for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
@@ -89,8 +90,9 @@ void testWritingToFile(const QString &path, metadata_tag_t tag) {
       ASSERT_TRUE(result.newTags[i] == initValue);
     } else {
       ASSERT_TRUE(result.newTags[i] == empty);
-}
-    QString chk = resetFileMetadata->getByTagEnum(static_cast<metadata_tag_t>(i));
+    }
+    QString chk =
+        resetFileMetadata->getByTagEnum(static_cast<metadata_tag_t>(i));
     ASSERT_TRUE(chk == initValue || chk == noValue);
   }
   delete resetFileMetadata;
@@ -113,10 +115,10 @@ void testId3WritingForMp3s(const QString &path, bool v1, bool v2, bool v2_3,
   for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
     if (static_cast<metadata_tag_t>(i) == METADATA_TAG_GROUPING) {
       continue;
-}
+    }
     if (static_cast<metadata_tag_t>(i) == METADATA_TAG_KEY) {
       continue;
-}
+    }
     testWritingToFile(path, static_cast<metadata_tag_t>(i));
   }
 
@@ -238,11 +240,12 @@ TEST(AVFileMetadataTest, WriteMissing) {
     MetadataWriteResult result;
     for (unsigned int j = 0; j < METADATA_TAG_T_COUNT; j++) {
       result.newTags.push_back("");
-}
-    fileMetadata->writeKeyByTagEnum("ABC", static_cast<metadata_tag_t>(i), result, prefs);
+    }
+    fileMetadata->writeKeyByTagEnum("ABC", static_cast<metadata_tag_t>(i),
+                                    result, prefs);
     for (unsigned int j = 0; j < METADATA_TAG_T_COUNT; j++) {
       ASSERT_EQ(result.newTags[i], "");
-}
+    }
   }
 }
 
@@ -256,11 +259,12 @@ TEST(AVFileMetadataTest, WriteNull) {
     MetadataWriteResult result;
     for (unsigned int j = 0; j < METADATA_TAG_T_COUNT; j++) {
       result.newTags.push_back("");
-}
-    fileMetadata->writeKeyByTagEnum("ABC", static_cast<metadata_tag_t>(i), result, prefs);
+    }
+    fileMetadata->writeKeyByTagEnum("ABC", static_cast<metadata_tag_t>(i),
+                                    result, prefs);
     for (unsigned int j = 0; j < METADATA_TAG_T_COUNT; j++) {
       ASSERT_EQ(result.newTags[i], "");
-}
+    }
   }
 }
 
@@ -268,7 +272,7 @@ TEST(AVFileMetadataTest, WriteFlac) {
   for (unsigned int i = 0; i < METADATA_TAG_T_COUNT; i++) {
     if (static_cast<metadata_tag_t>(i) == METADATA_TAG_GROUPING) {
       continue;
-}
+    }
     testWritingToFile("../is_KeyFinder/test-resources/writeTags/flac.flac",
                       static_cast<metadata_tag_t>(i));
   }
